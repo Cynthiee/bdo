@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative mb-12">
+    <div class="bg-blue-800 text-white py-16 rounded-lg shadow-xl">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h1 class="text-4xl font-bold mb-4">Banking Made Simple</h1>
+                    <p class="text-xl mb-8">Secure, reliable, and intuitive banking services designed to help you achieve your financial goals.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="{% url 'signup' %}" class="bg-white text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-100 transition duration-300">Open an Account</a>
+                        <a href="{% url 'login' %}" class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:text-blue-800 transition duration-300">Login to Online Banking</a>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <!-- Replace with actual image in production -->
+                    <img src="{% static 'images/banking-hero.svg' %}" alt="Online Banking" class="w-full">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="mb-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Why Choose BDO Banking?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-blue-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Secure Banking</h3>
+                <p class="text-gray-600">State-of-the-art security protocols to protect your financial information and transactions 24/7.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-blue-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Easy Account Management</h3>
+                <p class="text-gray-600">View balances, transfer funds, and manage your accounts with our intuitive online platform.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-blue-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Competitive Loans</h3>
+                <p class="text-gray-600">Access a variety of loan options with competitive rates to help you achieve your financial goals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Account Types Section -->
+<section class="mb-16 bg-gray-50 py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Account Options</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Savings Account -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-blue-800 text-white p-4">
+                    <h3 class="text-xl font-bold">Savings Account</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Start saving with competitive interest rates and minimal fees.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>No monthly maintenance fee</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Competitive interest rates</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Easy online access</span>
+                        </li>
+                    </ul>
+                    <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                </div>
+            </div>
+            
+            <!-- Checking Account -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-blue-800 text-white p-4">
+                    <h3 class="text-xl font-bold">Checking Account</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Manage your day-to-day expenses with our flexible checking account.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Free online bill pay</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>No minimum balance</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Free debit card</span>
+                        </li>
+                    </ul>
+                    <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                </div>
+            </div>
+            
+            <!-- Fixed Deposit -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-blue-800 text-white p-4">
+                    <h3 class="text-xl font-bold">Fixed Deposit</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Grow your savings with higher interest rates for fixed terms.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Higher interest rates</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Flexible term options</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Guaranteed returns</span>
+                        </li>
+                    </ul>
+                    <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="mb-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <span class="text-blue-800 font-bold text-xl">JD</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">John Doe</h4>
+                        <p class="text-sm text-gray-500">Savings Account Customer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"I've been with BDO Banking for over 5 years now, and their customer service has always been exceptional. The online banking platform is intuitive and makes managing my finances a breeze."</p>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <span class="text-blue-800 font-bold text-xl">JS</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Jane Smith</h4>
+                        <p class="text-sm text-gray-500">Business Account Customer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"As a small business owner, I needed a bank that understood my needs. BDO Banking has been a reliable partner, offering personalized service and flexible solutions that have helped my business grow."</p>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <span class="text-blue-800 font-bold text-xl">RJ</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Robert Johnson</h4>
+                        <p class="text-sm text-gray-500">Loan Customer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"The loan process at BDO Banking was smooth and transparent. The staff guided me through each step, and I was able to get approved quickly. The interest rates were competitive, and I couldn't be happier."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="mb-16">
+    <div class="bg-blue-100 py-12 rounded-lg">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-blue-800 mb-4">Ready to get started?</h2>
+            <p class="text-xl text-blue-600 mb-8">Join thousands of satisfied customers who trust BDO Banking with their financial needs.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="{% url 'signup' %}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-700 transition duration-300">Open an Account Today</a>
+                <a href="#" class="border-2 border-blue-800 text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-800 hover:text-white transition duration-300">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

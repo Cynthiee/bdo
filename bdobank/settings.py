@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,7 +35,7 @@ INSTALLED_APPS = [
     'admin_portal',
     'transactions',
     'crispy_forms',
-    'crispy_tailwind'
+    
     
 ]
 
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'bdobank.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [ os.path.join(BASE_DIR / "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -7,6 +7,10 @@ from .forms import BankAccountCreationForm
 from transactions.models import Transaction
 import uuid
 
+
+def landing_page_view(request):
+    return render(request, 'landing_page.html')
+
 @login_required
 def dashboard_view(request):
     accounts = BankAccount.objects.filter(owner=request.user)
