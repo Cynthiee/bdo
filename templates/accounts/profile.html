@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Profile - BDO Banking{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="bg-blue-800 text-white p-6">
+            <h1 class="text-2xl font-bold">Your Profile</h1>
+        </div>
+        
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500">Full Name</h3>
+                        <p class="mt-1 text-lg font-medium">{{ user.first_name }} {{ user.last_name }}</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500">Email Address</h3>
+                        <p class="mt-1 text-lg font-medium">{{ user.email }}</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500">Username</h3>
+                        <p class="mt-1 text-lg font-medium">{{ user.username }}</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500">Phone Number</h3>
+                        <p class="mt-1 text-lg font-medium">{{ user.phone_number }}</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500">Date of Birth</h3>
+                        <p class="mt-1 text-lg font-medium">{{ user.date_of_birth }}</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500">Address</h3>
+                        <p class="mt-1 text-lg font-medium">{{ user.address }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            {% if user.customer_profile %}
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Banking Information</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-500">Customer ID</h3>
+                        <p class="mt-1 text-lg font-medium">{{ user.customer_profile.customer_id }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="mt-8 flex justify-center">
+                <a href="{% url 'update_profile' %}" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200">
+                    Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

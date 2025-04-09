@@ -1,0 +1,200 @@
+<!-- templates/admin_portal/user_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded-lg p-6 mb-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">User Details</h1>
+        <div>
+            <a href="{% url 'user_edit' user_obj.id %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Edit User</a>
+        </div>
+    </div>
+    
+    <!-- User Information -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="md:col-span-1">
+            <div class="bg-white p-4 border rounded-lg shadow-sm h-full">
+                <div class="flex flex-col items-center mb-4">
+                    <div class="h-32 w-32 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                        {% if user_obj.profile_picture %}
+                            <img src="{{ user_obj.profile_picture.url }}" alt="{{ user_obj.username }}" class="h-32 w-32 rounded-full">
+                        {% else %}
+                            <span class="text-gray-500 text-4xl font-semibold">{{ user_obj.first_name|first|upper }}{{ user_obj.last_name|first|upper }}</span>
+                        {% endif %}
+                    </div>
+                    <h2 class="text-xl font-semibold">{{ user_obj.first_name }} {{ user_obj.last_name }}</h2>
+                    <p class="text-gray-500">@{{ user_obj.username }}</p>
+                    <p class="mt-2">
+                        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full 
+                            {% if user_obj.user_type == 'admin' %}bg-purple-100 text-purple-800
+                            {% elif user_obj.user_type == 'staff' %}bg-blue-100 text-blue-800
+                            {% else %}bg-green-100 text-green-800{% endif %}">
+                            {{ user_obj.get_user_type_display }}
+                        </span>
+                    </p>
+                    <p class="mt-2">
+                        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full 
+                            {% if user_obj.is_active %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {% if user_obj.is_active %}Active{% else %}Inactive{% endif %}
+                        </span>
+                    </p>
+                </div>
+                
+                <div class="border-t pt-4">
+                    <div class="mb-3">
+                        <h3 class="text-sm font-medium text-gray-500">Email</h3>
+                        <p class="mt-1">{{ user_obj.email }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="text-sm font-medium text-gray-500">Phone</h3>
+                        <p class="mt-1">{{ user_obj.phone_number|default:"Not provided" }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="text-sm font-medium text-gray-500">Date of Birth</h3>
+                        <p class="mt-1">{{ user_obj.date_of_birth|date:"F d, Y"|default:"Not provided" }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="text-sm font-medium text-gray-500">Address</h3>
+                        <p class="mt-1">{{ user_obj.address|default:"Not provided" }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="text-sm font-medium text-gray-500">Join Date</h3>
+                        <p class="mt-1">{{ user_obj.date_joined|date:"F d, Y" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="md:col-span-2">
+            {% if user_obj.user_type == 'customer' %}
+                <!-- Customer Profile Information -->
+                <div class="bg-white p-4 border rounded-lg shadow-sm mb-6">
+                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">Customer Information</h3>
+                    
+                    {% if customer_profile %}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500">Customer ID</h4>
+                                <p class="mt-1 font-medium">{{ customer_profile.customer_id }}</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500">ID Document Type</h4>
+                                <p class="mt-1">{{ customer_profile.id_document_type|title }}</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500">ID Document Number</h4>
+                                <p class="mt-1">{{ customer_profile.id_document_number }}</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500">Occupation</h4>
+                                <p class="mt-1">{{ customer_profile.occupation|default:"Not provided" }}</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500">No customer profile information available.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Bank Accounts -->
+                <div class="bg-white p-4 border rounded-lg shadow-sm mb-6">
+                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">Bank Accounts</h3>
+                    
+                    {% if bank_accounts %}
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account Number</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Balance</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% for account in bank_accounts %}
+                                    <tr>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{{ account.account_number }}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ account.account_type.name }}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">${{ account.balance }}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {% if account.status == 'active' %}bg-green-100 text-green-800
+                                                {% elif account.status == 'inactive' %}bg-gray-100 text-gray-800
+                                                {% elif account.status == 'suspended' %}bg-yellow-100 text-yellow-800
+                                                {% else %}bg-red-100 text-red-800{% endif %}">
+                                                {{ account.status|title }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                            <a href="{% url 'account_detail' account.id %}" class="text-blue-600 hover:text-blue-900">View</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500">No bank accounts found.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Loans -->
+                <div class="bg-white p-4 border rounded-lg shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">Loans</h3>
+                    
+                    {% if loans %}
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loan ID</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% for loan in loans %}
+                                    <tr>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{{ loan.loan_id }}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ loan.loan_type.name }}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">${{ loan.amount }}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {% if loan.status == 'active' %}bg-green-100 text-green-800
+                                                {% elif loan.status == 'pending' %}bg-yellow-100 text-yellow-800
+                                                {% elif loan.status == 'paid' %}bg-blue-100 text-blue-800
+                                                {% elif loan.status == 'rejected' %}bg-red-100 text-red-800
+                                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                                {{ loan.status|title }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                            {% if loan.status == 'pending' %}
+                                            <a href="{% url 'loan_approval' loan.loan_id %}" class="text-blue-600 hover:text-blue-900">Review</a>
+                                            {% else %}
+                                            <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500">No loans found.</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <!-- Staff/Admin Activity -->
+                <div class="bg-white p-4 border rounded-lg shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">Activity Log</h3>
+                    <p class="text-gray-500">Recent activity log would display here.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

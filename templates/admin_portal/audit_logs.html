@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}Audit Logs{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-6">Audit Logs</h1>
+    
+    <!-- Filters -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-lg font-medium text-gray-700 mb-4">Filter Logs</h2>
+        <form method="get" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="action_type" class="block text-sm font-medium text-gray-700 mb-1">
+                        Action Type
+                    </label>
+                    <select id="action_type" name="action_type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">All Actions</option>
+                        <option value="login">Login</option>
+                        <option value="logout">Logout</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                        <option value="approve">Approve</option>
+                        <option value="reject">Reject</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="resource_type" class="block text-sm font-medium text-gray-700 mb-1">
+                        Resource Type
+                    </label>
+                    <select id="resource_type" name="resource_type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">All Resources</option>
+                        <option value="User">User</option>
+                        <option value="BankAccount">Bank Account</option>
+                        <option value="Loan">Loan</option>
+                        <option value="Transaction">Transaction</option>
+                        <option value="SystemSetting">System Setting</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="date_range" class="block text-sm font-medium text-gray-700 mb-1">
+                        Date Range
+                    </label>
+                    <select id="date_range" name="date_range" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Apply Filters
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Logs Table -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+            <h2 class="text-lg font-medium text-gray-700">System Logs</h2>
+        </div>
+        
+        {% if page_obj %}
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Timestamp
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            User
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Action
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Resource
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            IP Address
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Details
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for log in page_obj %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ log.timestamp|date:"M d, Y" }} at {{ log.timestamp|time:"H:i:s" }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {% if log.user %}
+                                    <a href="{% url 'user_detail' log.user.id %}" class="text-indigo-600 hover:text-indigo-900">
+                                        {{ log.user.username }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-gray-500">System</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {% if log.action == 'login' or log.action == 'logout' %}bg-blue-100 text-blue-800
+                                    {% elif log.action == 'create' %}bg-green-100 text-green-800
+                                    {% elif log.action == 'update' %}bg-yellow-100 text-yellow-800
+                                    {% elif log.action == 'delete' %}bg-red-100 text-red-800
+                                    {% elif log.action == 'approve' %}bg-purple-100 text-purple-800
+                                    {% elif log.action == 'reject' %}bg-orange-100 text-orange-800
+                                    {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                    {{ log.action|title }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ log.resource_type }}: {{ log.resource_id }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ log.ip_address|default:"-" }}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
+                                {{ log.details|default:"-" }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+                <div class="px-6 py-4 bg-white border-t border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing <span class="font-medium">{{ page_obj.start_index }}</span> to 
+                                <span class="font-medium">{{ page_obj.end_index }}</span> of 
+                                <span class="font-medium">{{ page_obj.paginator.count }}</span> logs
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="flex items-center">
+                                {% if page_obj.has_previous %}
+                                    <a href="?page={{ page_obj.previous_page_number }}&{{ request.GET.urlencode }}" class="px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+                                {% endif %}
+                                
+                                {% for i in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == i %}
+                                        <span class="px-3 py-1 rounded-md text-sm font-medium bg-indigo-50 text-indigo-600">{{ i }}</span>
+                                    {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+                                        <a href="?page={{ i }}&{{ request.GET.urlencode }}" class="px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">{{ i }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}&{{ request.GET.urlencode }}" class="px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="px-6 py-4 text-center text-gray-500">
+                No audit logs found.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

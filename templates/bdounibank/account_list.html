@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Accounts - BDO Banking{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Your Accounts</h1>
+    <a href="{% url 'create_account' %}" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+        <i class="fas fa-plus mr-1"></i> New Account
+    </a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    {% for account in accounts %}
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="bg-blue-800 text-white p-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-bold">{{ account.account_type.name }}</h2>
+                <span class="px-2 py-1 bg-blue-700 rounded-full text-xs">{{ account.status|title }}</span>
+            </div>
+            <p class="text-sm text-blue-200 mt-1">{{ account.account_number }}</p>
+        </div>
+        
+        <div class="p-4">
+            <div class="mb-4">
+                <p class="text-sm text-gray-500">Current Balance</p>
+                <p class="text-2xl font-bold {% if account.balance > 0 %}text-green-600{% else %}text-red-600{% endif %}">
+                    ${{ account.balance|floatformat:2 }}
+                </p>
+            </div>
+            
+            <div class="flex space-x-2">
+                <a href="{% url 'account_detail' account.account_number %}" class="flex-1 bg-blue-600 text-white text-center py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+                    Details
+                </a>
+                <a href="{% url 'deposit' %}?account={{ account.account_number }}" class="flex-1 bg-green-600 text-white text-center py-2 px-4 rounded hover:bg-green-700 transition duration-200">
+                    Deposit
+                </a>
+                <a href="{% url 'withdraw' %}?account={{ account.account_number }}" class="flex-1 bg-red-600 text-white text-center py-2 px-4 rounded hover:bg-red-700 transition duration-200">
+                    Withdraw
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="bg-white rounded-lg shadow-md p-6 col-span-full">
+        <div class="text-center">
+            <p class="text-xl text-gray-600 mb-4">You don't have any accounts yet.</p>
+            <a href="{% url 'create_account' %}" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+                <i class="fas fa-plus mr-1"></i> Open Your First Account
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
