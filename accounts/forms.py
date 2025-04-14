@@ -3,6 +3,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import User, CustomerProfile
 
 class CustomUserCreationForm(UserCreationForm):
+    username = forms.CharField(
+        max_length=150,
+        required=False,  # Make it optional if needed
+        help_text="Required. 12 characters or fewer. Letters, digits and @/./+/-/_ only."
+    )
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
@@ -11,7 +16,10 @@ class CustomUserCreationForm(UserCreationForm):
         required=True
     )
     phone_number = forms.CharField(required=True)
-    address = forms.CharField(widget=forms.Textarea, required=True)
+    address = forms.CharField(
+    widget=forms.Textarea(attrs={'rows': 2, 'cols': 40}), 
+    required=True
+)
     
     class Meta:
         model = User
@@ -33,4 +41,8 @@ class CustomerProfileForm(forms.ModelForm):
 
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': True}))
-    remember_me = forms.BooleanField(required=False, initial=False)
+    remember_me = forms.BooleanField(
+        required=False,
+        initial=True,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input mr-2'})
+    )
