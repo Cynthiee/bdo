@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z$mwwxiqk9o_3d9_mw^4o9_kj(_=(&_%8!xs9msshq_iojy@37'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['bdo-unibank.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -35,11 +35,24 @@ INSTALLED_APPS = [
     'admin_portal',
     'transactions',
     'crispy_forms',
-    'crispy_tailwind'   
+    'crispy_tailwind',  
+
+     # For Google Authentication
+    'allauth',
+    'allauth.account',
+    # Optional -- requires install using `django-allauth[socialaccount]`.
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     
 ]
 
+SITE_ID = 1
+
+
 MIDDLEWARE = [
+    # For Google Authentication
+    "allauth.account.middleware.AccountMiddleware",
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +62,35 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
+]
+
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    # For Google Authentication
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '1044241902003-70pbbhmtkiahlcclhisg74m67u72c4l8.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
+
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default Django backend
+
+    # For Google Authentication
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+
 ]
 
 
@@ -137,6 +179,8 @@ INTERNAL_IPS = [
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 

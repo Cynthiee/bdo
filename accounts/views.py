@@ -52,7 +52,7 @@ def dashboard_view(request):
         # You could add account balances, recent transactions, etc.
         context['customer_profile'] = user.customer_profile
         
-    return render(request, 'accounts/dashboard.html', {'context': context})
+    return render(request, 'bdounibank/dashboard.html', {'context': context})
 
 @login_required
 def profile_setup_view(request):

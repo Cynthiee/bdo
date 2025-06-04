@@ -7,6 +7,7 @@ from bdounibank.views import landing_page_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("auth/", include("allauth.urls")),  # ✅ Needed for social logins
     path("__reload__/", include("django_browser_reload.urls")),
     path('', landing_page_view, name='landing_page'),
     path('banking/', include('bdounibank.urls')),

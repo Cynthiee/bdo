@@ -11,8 +11,13 @@
                     <h1 class="text-4xl font-bold mb-4">Banking Made Simple</h1>
                     <p class="text-xl mb-8">Secure, reliable, and intuitive banking services designed to help you achieve your financial goals.</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'signup' %}" class="bg-white text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-100 transition duration-300">Accounts</a>
+                        <a href="{% url 'dashboard' %}" class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:text-blue-800 transition duration-300">Go to Dashboard</a>
+                        {% else %}
                         <a href="{% url 'signup' %}" class="bg-white text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-100 transition duration-300">Open an Account</a>
                         <a href="{% url 'login' %}" class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:text-blue-800 transition duration-300">Login to Online Banking</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="hidden md:block">
@@ -220,12 +225,21 @@
 <section class="mb-16">
     <div class="bg-blue-100 py-12 rounded-lg">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-blue-800 mb-4">Ready to get started?</h2>
-            <p class="text-xl text-blue-600 mb-8">Join thousands of satisfied customers who trust BDO Banking with their financial needs.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="{% url 'signup' %}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-700 transition duration-300">Open an Account Today</a>
-                <a href="#" class="border-2 border-blue-800 text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-800 hover:text-white transition duration-300">Learn More</a>
-            </div>
+        {% if user.is_authenticated %}
+        <h2 class="text-3xl font-bold text-blue-800 mb-4">Welcome back, {{ user.first_name|default:"Valued Customer" }}!</h2>
+        <p class="text-xl text-blue-600 mb-8">Thank you for choosing BDO Banking. Explore your dashboard, manage your accounts, and take full control of your finances.</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="{% url 'dashboard' %}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-700 transition duration-300">Go to Dashboard</a>
+            <a href="{% url 'signup' %}     " class="border-2 border-blue-800 text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-800 hover:text-white transition duration-300">Need Help?</a>
+        </div>
+        {% else %}
+        <h2 class="text-3xl font-bold text-blue-800 mb-4">Ready to get started?</h2>
+        <p class="text-xl text-blue-600 mb-8">Join thousands of satisfied customers who trust BDO Banking with their financial needs.</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="{% url 'signup' %}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-700 transition duration-300">Open an Account Today</a>
+            <a href="#" class="border-2 border-blue-800 text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-800 hover:text-white transition duration-300">Learn More</a>
+        </div>
+        {% endif %}
         </div>
     </div>
 </section>

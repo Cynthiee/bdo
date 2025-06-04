@@ -31,7 +31,7 @@ def dashboard_view(request):
 @login_required
 def account_list_view(request):
     accounts = BankAccount.objects.filter(owner=request.user)
-    return render(request, 'banking/account_list.html', {'accounts': accounts})
+    return render(request, 'bdounibank/account_list.html', {'accounts': accounts})
 
 @login_required
 def account_detail_view(request, account_number):
@@ -48,7 +48,7 @@ def account_detail_view(request, account_number):
         'account': account,
         'transactions': transactions
     }
-    return render(request, 'banking/account_detail.html', context)
+    return render(request, 'bdounibank/account_detail.html', context)
 
 @login_required
 def create_account_view(request):
@@ -84,4 +84,4 @@ def create_account_view(request):
         'form': form,
         'account_types': account_types
     }
-    return render(request, 'banking/create_account.html', context)
+    return render(request, 'bdounibank/create_account.html', context)
