@@ -102,7 +102,11 @@
                             <span>Easy online access</span>
                         </li>
                     </ul>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create_account' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% else %}
                     <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% endif %}
                 </div>
             </div>
             
@@ -133,7 +137,11 @@
                             <span>Free debit card</span>
                         </li>
                     </ul>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create_account' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% else %}
                     <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% endif %}
                 </div>
             </div>
             
@@ -164,7 +172,11 @@
                             <span>Guaranteed returns</span>
                         </li>
                     </ul>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create_account' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% else %}
                     <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

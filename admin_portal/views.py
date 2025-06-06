@@ -10,14 +10,15 @@ from bdounibank.models import BankAccount, AccountType
 from loans.models import Loan, LoanType
 from transactions.models import Transaction
 from .models import AuditLog, SystemSetting
-from .forms import UserSearchForm, AccountSearchForm, LoanApprovalForm
+from django.db.models import Q
+from .forms import UserSearchForm, AccountSearchForm, LoanApprovalForm, BankAccountForm
 
 # Helper function to check if user is admin or staff
 def is_admin_or_staff(user):
     return user.user_type in ['admin', 'staff']
 
 @login_required
-@user_passes_test(is_admin_or_staff)
+# @user_passes_test(is_admin_or_staff)
 def admin_dashboard_view(request):
     # Get counts for dashboard
     user_count = User.objects.filter(user_type='customer').count()
@@ -42,7 +43,7 @@ def admin_dashboard_view(request):
     return render(request, 'admin_portal/dashboard.html', context)
 
 @login_required
-@user_passes_test(is_admin_or_staff)
+# @user_passes_test(is_admin_or_staff)
 def user_management_view(request):
     form = UserSearchForm(request.GET)
     users = User.objects.all()
@@ -88,9 +89,9 @@ def account_management_view(request):
         
         if search_term:
             accounts = accounts.filter(
-                models.Q(account_number__icontains=search_term) |
-                models.Q(owner__username__icontains=search_term) |
-                models.Q(owner__email__icontains=search_term)
+                Q(account_number__icontains=search_term) |
+                Q(owner__username__icontains=search_term) |
+                Q(owner__email__icontains=search_term)
             )
         
         if account_status:
@@ -240,7 +241,7 @@ def user_detail_view(request, user_id):
     if user.user_type == 'customer':
         customer_profile = CustomerProfile.objects.filter(user=user).first()
         bank_accounts = BankAccount.objects.filter(owner=user)
-        loans = Loan.objects.filter(applicant=user)
+        loans = Loan.objects.filter(borrower=user)
     
     context = {
         'user_obj': user,
@@ -301,3 +302,26 @@ def account_detail_view(request, account_id):
         'page_obj': page_obj,
     }
     return render(request, 'admin_portal/account_detail.html', context)
+
+
+@login_required
+@user_passes_test(is_admin_or_staff)
+def account_edit_view(request, account_id):
+    """
+    Let an admin/staff edit all fields of a BankAccount.
+    """
+    account = get_object_or_404(BankAccount, id=account_id)
+
+    if request.method == 'POST':
+        form = BankAccountForm(request.POST, instance=account)
+        if form.is_valid():
+            form.save()
+            # After saving, redirect back to the account detail page:
+            return redirect('account_detail', account_id=account.id)
+    else:
+        form = BankAccountForm(instance=account)
+
+    return render(request, 'admin_portal/edit_account.html', {
+        'bank_account': account,
+        'form': form,
+    })

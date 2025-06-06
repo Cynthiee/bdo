@@ -33,9 +33,9 @@
                 <a href="{% url 'account_detail' account.account_number %}" class="flex-1 bg-blue-600 text-white text-center py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
                     Details
                 </a>
-                <a href="{% url 'deposit' %}?account={{ account.account_number }}" class="flex-1 bg-green-600 text-white text-center py-2 px-4 rounded hover:bg-green-700 transition duration-200">
+                <!-- <a href="{% url 'deposit' %}?account={{ account.account_number }}" class="flex-1 bg-green-600 text-white text-center py-2 px-4 rounded hover:bg-green-700 transition duration-200">
                     Deposit
-                </a>
+                </a> -->
                 <a href="{% url 'withdraw' %}?account={{ account.account_number }}" class="flex-1 bg-red-600 text-white text-center py-2 px-4 rounded hover:bg-red-700 transition duration-200">
                     Withdraw
                 </a>

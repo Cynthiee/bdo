@@ -6,11 +6,11 @@ class BankAccountCreationForm(forms.ModelForm):
         queryset=AccountType.objects.all(),
         empty_label=None
     )
-    initial_deposit = forms.DecimalField(
-        max_digits=12, 
-        decimal_places=2,
-        min_value=0.01
-    )
+    # initial_deposit = forms.DecimalField(
+    #     max_digits=12, 
+    #     decimal_places=2,
+    #     min_value=0.01
+    # )
     
     class Meta:
         model = BankAccount

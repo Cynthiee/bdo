@@ -51,18 +51,21 @@ def deposit_view(request):
             
             # Process deposit
             with transaction.atomic():
-                account.deposit(amount)
+                # account.deposit(amount)
+                pass
                 
                 # Create transaction record
                 Transaction.objects.create(
                     account=account,
                     transaction_type='deposit',
                     amount=amount,
-                    status='completed',
+                    # status='completed',
+                    status='pending',
                     description=description or 'Deposit'
                 )
             
-            messages.success(request, f"Deposit of {amount} completed successfully.")
+            # messages.success(request, f"Deposit of {amount} completed successfully.")
+            messages.success(request, f"Deposit of {amount} is currently being processed.")
             return redirect('account_detail', account_number=account.account_number)
     else:
         form = DepositForm(request.user)
@@ -80,18 +83,21 @@ def withdrawal_view(request):
             
             # Process withdrawal
             with transaction.atomic():
-                account.withdraw(amount)
+                # account.withdraw(amount)
+                pass
                 
                 # Create transaction record
                 Transaction.objects.create(
                     account=account,
                     transaction_type='withdrawal',
                     amount=amount,
-                    status='completed',
+                    # status='completed',
+                    status='pending',
                     description=description or 'Withdrawal'
                 )
             
-            messages.success(request, f"Withdrawal of {amount} completed successfully.")
+            # messages.success(request, f"Withdrawal of {amount} completed successfully.")
+            messages.success(request, f"Withdrawal of {amount} is currently being processed.")
             return redirect('account_detail', account_number=account.account_number)
     else:
         form = WithdrawalForm(request.user)

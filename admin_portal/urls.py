@@ -13,4 +13,5 @@ urlpatterns = [
     path('users/<int:user_id>/', views.user_detail_view, name='user_detail'),
     path('users/<int:user_id>/edit/', views.user_edit_view, name='user_edit'),
     path('accounts/<int:account_id>/', views.account_detail_view, name='account_detail'),
+    path('accounts/<int:account_id>/edit/', views.account_edit_view, name='admin_account_edit'),
 ]

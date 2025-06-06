@@ -6,27 +6,52 @@ from .models import BankAccount, AccountType
 from .forms import BankAccountCreationForm
 from transactions.models import Transaction
 import uuid
-
+from django.db.models import Sum
+from decimal import Decimal
 
 def landing_page_view(request):
     return render(request, 'landing_page.html')
 
+# @login_required
+# def dashboard_view(request):
+#     accounts = BankAccount.objects.filter(owner=request.user)
+#     total_balance = sum(account.balance for account in accounts)
+    
+#     # Get recent transactions
+#     recent_transactions = Transaction.objects.filter(
+#         account__in=accounts
+#     ).order_by('-timestamp')[:5]
+    
+#     context = {
+#         'accounts': accounts,
+#         'total_balance': total_balance,
+#         'recent_transactions': recent_transactions
+#     }
+#     return render(request, 'banking/dashboard.html', context)
+
+
 @login_required
 def dashboard_view(request):
+    # 1. Fetch all accounts for this user
     accounts = BankAccount.objects.filter(owner=request.user)
-    total_balance = sum(account.balance for account in accounts)
-    
-    # Get recent transactions
-    recent_transactions = Transaction.objects.filter(
-        account__in=accounts
-    ).order_by('-timestamp')[:5]
-    
+
+    # 2. Use Django’s aggregate() so that the database returns a Decimal (or None)
+    agg = accounts.aggregate(total=Sum('balance'))
+    total_balance = agg['total'] if agg['total'] is not None else Decimal('0.00')
+
+    # 3. Grab the 5 most recent transactions across all of this user’s accounts
+    recent_transactions = (
+        Transaction.objects
+        .filter(account__in=accounts)
+        .order_by('-timestamp')[:5]
+    )
+
     context = {
         'accounts': accounts,
         'total_balance': total_balance,
-        'recent_transactions': recent_transactions
+        'recent_transactions': recent_transactions,
     }
-    return render(request, 'banking/dashboard.html', context)
+    return render(request, 'bdounibank/dashboard.html', context)
 
 @login_required
 def account_list_view(request):
@@ -62,19 +87,20 @@ def create_account_view(request):
             account.save()
             
             # Process initial deposit
-            initial_deposit = form.cleaned_data['initial_deposit']
-            account.deposit(initial_deposit)
+            # initial_deposit = form.cleaned_data['initial_deposit']
+            # account.deposit(initial_deposit)
             
             # Create transaction record
-            Transaction.objects.create(
-                account=account,
-                transaction_type='deposit',
-                amount=initial_deposit,
-                status='completed',
-                description='Initial deposit'
-            )
+            # Transaction.objects.create(
+            #     account=account,
+            #     transaction_type='deposit',
+            #     amount=initial_deposit,
+            #     status='completed',
+            #     description='Initial deposit'
+            # )
             
-            messages.success(request, f"Account created successfully with an initial deposit of {initial_deposit}.")
+            # messages.success(request, f"Account created successfully with an initial deposit of {initial_deposit}.")
+            messages.success(request, f"Account created successfully.")
             return redirect('account_detail', account_number=account.account_number)
     else:
         form = BankAccountCreationForm()

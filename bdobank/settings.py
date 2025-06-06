@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tailwind',
+    'widget_tweaks',
     'theme',
     'django_browser_reload',
     'bdounibank',

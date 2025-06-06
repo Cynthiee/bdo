@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Account – {{ bank_account.account_number }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <!-- Back to Account Details -->
+    <a href="{% url 'account_detail' bank_account.id %}"
+       class="inline-flex items-center text-indigo-600 hover:text-indigo-900 mb-4">
+        ← Back to Account Details
+    </a>
+
+    <!-- Page Header -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">
+            Edit Account: {{ bank_account.account_number }}
+        </h1>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+            <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <input
+            style="margin-top: 2%;"
+            type="submit"
+            value="Submit"
+            class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
+            />
+
+            </form>
+    </div>
+</div>
+{% endblock %}

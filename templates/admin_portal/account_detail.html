@@ -70,9 +70,9 @@
                         Reactivate Account
                     </button>
                 {% endif %}
-                <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                <a href="{% url 'admin_account_edit' account.id %}" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                     Edit Account
-                </button>
+                </a>
             </div>
         </div>
     </div>

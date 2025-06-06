@@ -8,6 +8,8 @@ from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm, CustomerProfileForm, CustomLoginForm
 from .models import User, CustomerProfile
 import uuid
+from bdounibank . models import BankAccount
+from transactions.models import Transaction
 
 class SignUpView(CreateView):
     model = User
@@ -39,21 +41,8 @@ class CustomLoginView(LoginView):
             self.request.session.set_expiry(0)
         
         return super().form_valid(form)
-
-@login_required
-def dashboard_view(request):
-    user = request.user
-    context = {
-        'user': user,
-    }
     
-    # If user has a customer profile, add related data
-    if hasattr(user, 'customer_profile'):
-        # You could add account balances, recent transactions, etc.
-        context['customer_profile'] = user.customer_profile
-        
-    return render(request, 'bdounibank/dashboard.html', {'context': context})
-
+    
 @login_required
 def profile_setup_view(request):
     if hasattr(request.user, 'customer_profile'):
