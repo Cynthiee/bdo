@@ -77,7 +77,8 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user_obj.date_joined|date:"M d, Y" }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a href="{% url 'user_detail' user_obj.id %}" class="text-blue-600 hover:text-blue-900 mr-3">View</a>
-                        <a href="{% url 'user_edit' user_obj.id %}" class="text-green-600 hover:text-green-900">Edit</a>
+                        <a href="{% url 'user_edit' user_obj.id %}" class="text-green-600 hover:text-green-900 mr-3">Edit</a>
+                        <a href="{% url 'account_management' %}" class="text-green-600 hover:text-green-900">Fund User</a>
                     </td>
                 </tr>
                 {% empty %}

@@ -18,12 +18,12 @@ def is_admin_or_staff(user):
     return user.user_type in ['admin', 'staff']
 
 @login_required
-# @user_passes_test(is_admin_or_staff)
+@user_passes_test(is_admin_or_staff)
 def admin_dashboard_view(request):
     # Get counts for dashboard
     user_count = User.objects.filter(user_type='customer').count()
     account_count = BankAccount.objects.count()
-    active_loans_count = Loan.objects.filter(status='active').count()
+    active_loans_count = Loan.objects.filter(status='approved').count()
     pending_loans_count = Loan.objects.filter(status='pending').count()
     
     # Get recent transactions
@@ -43,7 +43,7 @@ def admin_dashboard_view(request):
     return render(request, 'admin_portal/dashboard.html', context)
 
 @login_required
-# @user_passes_test(is_admin_or_staff)
+@user_passes_test(is_admin_or_staff)
 def user_management_view(request):
     form = UserSearchForm(request.GET)
     users = User.objects.all()
@@ -112,7 +112,7 @@ def account_management_view(request):
 def loan_management_view(request):
     # Get loans with different statuses
     pending_loans = Loan.objects.filter(status='pending')
-    active_loans = Loan.objects.filter(status='active')
+    active_loans = Loan.objects.filter(status='approved')
     closed_loans = Loan.objects.filter(status__in=['paid', 'closed', 'rejected', 'defaulted'])
     
     context = {

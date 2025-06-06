@@ -43,9 +43,13 @@
                                 {{ loan.loan_id }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <a href="{% url 'user_detail' loan.applicant.id %}" class="text-indigo-600 hover:text-indigo-900">
-                                    {{ loan.applicant.get_full_name }}
-                                </a>
+                                {% if loan.borrower %}
+                                    <a href="{% url 'user_detail' loan.borrower.id %}">
+                                        {{ loan.borrower.get_full_name|default:loan.borrower.username }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-gray-400 italic">No user</span>
+                                {% endif %}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ loan.loan_type.name }}
@@ -92,15 +96,15 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Amount
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Outstanding
-                        </th>
+                        </th> -->
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Next Payment
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Actions
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -110,25 +114,30 @@
                                 {{ loan.loan_id }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <a href="{% url 'user_detail' loan.applicant.id %}" class="text-indigo-600 hover:text-indigo-900">
-                                    {{ loan.applicant.get_full_name }}
-                                </a>
+                                {% if loan.borrower %}
+                                    <a href="{% url 'user_detail' loan.borrower.id %}">
+                                        {{ loan.borrower.get_full_name|default:loan.borrower.username }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-gray-400 italic">No user</span>
+                                {% endif %}
                             </td>
+
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ loan.loan_type.name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 ${{ loan.amount|floatformat:2 }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 ${{ loan.outstanding_amount|floatformat:2 }}
-                            </td>
+                            </td> -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ loan.next_payment_date|date:"M d, Y" }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="#" class="text-indigo-600 hover:text-indigo-900">View Details</a>
-                            </td>
+                            </td> -->
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -168,9 +177,9 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Closed Date
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Actions
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -180,9 +189,13 @@
                                 {{ loan.loan_id }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <a href="{% url 'user_detail' loan.applicant.id %}" class="text-indigo-600 hover:text-indigo-900">
-                                    {{ loan.applicant.get_full_name }}
-                                </a>
+                                {% if loan.borrower %}
+                                    <a href="{% url 'user_detail' loan.borrower.id %}">
+                                        {{ loan.borrower.get_full_name|default:loan.borrower.username }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-gray-400 italic">No user</span>
+                                {% endif %}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ loan.loan_type.name }}
@@ -206,9 +219,9 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <!-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="#" class="text-indigo-600 hover:text-indigo-900">View History</a>
-                            </td>
+                            </td> -->
                         </tr>
                     {% endfor %}
                 </tbody>
