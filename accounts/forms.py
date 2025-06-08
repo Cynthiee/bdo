@@ -6,7 +6,6 @@ class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         max_length=150,
         required=False,  # Make it optional if needed
-        help_text="Required. 12 characters or fewer. Letters, digits and @/./+/-/_ only."
     )
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=True)

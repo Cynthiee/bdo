@@ -78,4 +78,8 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     
     def get_object(self):
         return self.request.user
-    
+
+#logout view function
+from django.contrib.auth.views import LogoutView
+class CustomLogoutView(LogoutView):
+    next_page = 'landing_page'  # Redirect to landing page after logout
