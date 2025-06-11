@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.utils import timezone
 from bdounibank.models import BankAccount
+from django.db import transaction as db_transaction
 from .models import Transaction, Transfer
 from .forms import DepositForm, WithdrawalForm, TransferForm
 import uuid
@@ -47,29 +48,19 @@ def deposit_view(request):
         if form.is_valid():
             account = form.cleaned_data['account']
             amount = form.cleaned_data['amount']
-            description = form.cleaned_data['description']
-            
-            # Process deposit
-            with transaction.atomic():
-                # account.deposit(amount)
-                pass
-                
-                # Create transaction record
-                Transaction.objects.create(
-                    account=account,
-                    transaction_type='deposit',
-                    amount=amount,
-                    # status='completed',
-                    status='pending',
-                    description=description or 'Deposit'
-                )
-            
-            # messages.success(request, f"Deposit of {amount} completed successfully.")
-            messages.success(request, f"Deposit of {amount} is currently being processed.")
+            description = form.cleaned_data.get('description') or 'Deposit request'
+            # Create a pending transaction for admin review
+            Transaction.objects.create(
+                account=account,
+                transaction_type='deposit',
+                amount=amount,
+                status='pending',
+                description=description
+            )
+            messages.success(request, f"Deposit of ₦{amount} submitted and is pending admin approval.")
             return redirect('account_detail', account_number=account.account_number)
     else:
         form = DepositForm(request.user)
-    
     return render(request, 'transactions/deposit.html', {'form': form})
 
 @login_required
@@ -79,30 +70,21 @@ def withdrawal_view(request):
         if form.is_valid():
             account = form.cleaned_data['account']
             amount = form.cleaned_data['amount']
-            description = form.cleaned_data['description']
-            
-            # Process withdrawal
-            with transaction.atomic():
-                # account.withdraw(amount)
-                pass
-                
-                # Create transaction record
-                Transaction.objects.create(
-                    account=account,
-                    transaction_type='withdrawal',
-                    amount=amount,
-                    # status='completed',
-                    status='pending',
-                    description=description or 'Withdrawal'
-                )
-            
-            # messages.success(request, f"Withdrawal of {amount} completed successfully.")
-            messages.success(request, f"Withdrawal of {amount} is currently being processed.")
+            description = form.cleaned_data.get('description') or 'Withdrawal request'
+            # Create a pending transaction for admin review
+            Transaction.objects.create(
+                account=account,
+                transaction_type='withdrawal',
+                amount=amount,
+                status='pending',
+                description=description
+            )
+            messages.success(request, f"Withdrawal of ₦{amount} submitted and is pending admin approval.")
             return redirect('account_detail', account_number=account.account_number)
     else:
         form = WithdrawalForm(request.user)
-    
     return render(request, 'transactions/withdrawal.html', {'form': form})
+
 
 @login_required
 def transfer_view(request):
@@ -112,50 +94,45 @@ def transfer_view(request):
             source_account = form.cleaned_data['source_account']
             destination_account = form.cleaned_data['destination_account']
             amount = form.cleaned_data['amount']
-            description = form.cleaned_data['description']
+            description = form.cleaned_data.get('description') or f'Transfer to {destination_account.account_number}'
             
-            # Process transfer
-            with transaction.atomic():
-                # Withdraw from source account
+            with db_transaction.atomic():
+                # Withdraw from source; may raise if insufficient
                 source_account.withdraw(amount)
-                
-                # Deposit to destination account
+                # Deposit to destination
                 destination_account.deposit(amount)
                 
-                # Create transaction records
-                transaction_id = uuid.uuid4()
+                # Use a common reference for both sides
+                ref = uuid.uuid4()
                 
-                # Source account transaction (withdrawal)
+                # Source transaction
                 source_transaction = Transaction.objects.create(
-                    transaction_id=transaction_id,
+                    transaction_id=ref,
                     account=source_account,
                     transaction_type='transfer',
                     amount=amount,
                     status='completed',
-                    description=description or f'Transfer to {destination_account.account_number}',
-                    reference_number=str(transaction_id)
+                    description=description,
+                    reference_number=str(ref)
                 )
-                
-                # Destination account transaction (deposit)
-                dest_transaction = Transaction.objects.create(
+                # Destination transaction
+                Transaction.objects.create(
                     account=destination_account,
                     transaction_type='transfer',
                     amount=amount,
                     status='completed',
                     description=f'Transfer from {source_account.account_number}',
-                    reference_number=str(transaction_id)
+                    reference_number=str(ref)
                 )
-                
-                # Create transfer record
+                # Record Transfer link
                 Transfer.objects.create(
                     transaction=source_transaction,
                     source_account=source_account,
                     destination_account=destination_account
                 )
-            
-            messages.success(request, f"Transfer of {amount} completed successfully.")
+            messages.success(request, f"Transfer of ₦{amount} completed successfully.")
             return redirect('account_detail', account_number=source_account.account_number)
     else:
         form = TransferForm(request.user)
-    
     return render(request, 'transactions/transfer.html', {'form': form})
+

@@ -5,52 +5,52 @@
 /* VARIABLE DEFINITIONS */
 html[data-theme="light"],
 :root {
-    --primary: #79aec8;
-    --secondary: #417690;
-    --accent: #f5dd5d;
-    --primary-fg: #fff;
+    --primary: #2c3e50; /* Dark Slate Blue */
+    --secondary: #1a252f; /* Deep Charcoal */
+    --accent: #d4af37; /* Subtle Gold */
+    --primary-fg: #ffffff;
 
-    --body-fg: #333;
-    --body-bg: #fff;
-    --body-quiet-color: #666;
-    --body-medium-color: #444;
+    --body-fg: #2c2c2c;
+    --body-bg: #f5f7fa;
+    --body-quiet-color: #7f8c8d;
+    --body-medium-color: #4a4a4a;
     --body-loud-color: #000;
 
-    --header-color: #ffc;
+    --header-color: #eaeaea;
     --header-branding-color: var(--accent);
     --header-bg: var(--secondary);
     --header-link-color: var(--primary-fg);
 
-    --breadcrumbs-fg: #c4dce8;
+    --breadcrumbs-fg: #bdc3c7;
     --breadcrumbs-link-fg: var(--body-bg);
-    --breadcrumbs-bg: #264b5d;
+    --breadcrumbs-bg: #1f2c35;
 
-    --link-fg: #417893;
-    --link-hover-color: #036;
+    --link-fg: #1c5d99; /* Muted Blue */
+    --link-hover-color: #154a73;
     --link-selected-fg: var(--secondary);
 
-    --hairline-color: #e8e8e8;
-    --border-color: #ccc;
+    --hairline-color: #dcdcdc;
+    --border-color: #b0b0b0;
 
-    --error-fg: #ba2121;
+    --error-fg: #a93226; /* Mature Red */
 
-    --message-success-bg: #dfd;
-    --message-warning-bg: #ffc;
-    --message-error-bg: #ffefef;
+    --message-success-bg: #e1f3e8;
+    --message-warning-bg: #fff8dc;
+    --message-error-bg: #fcebea;
 
-    --darkened-bg: #f8f8f8; /* A bit darker than --body-bg */
-    --selected-bg: #e4e4e4; /* E.g. selected table cells */
-    --selected-row: #ffc;
+    --darkened-bg: #eceff1;
+    --selected-bg: #d6dde3;
+    --selected-row: #f9f1c2;
 
     --button-fg: #fff;
     --button-bg: var(--secondary);
-    --button-hover-bg: #205067;
-    --default-button-bg: #205067;
+    --button-hover-bg: #142029;
+    --default-button-bg: #1c2e3a;
     --default-button-hover-bg: var(--secondary);
-    --close-button-bg: #747474;
-    --close-button-hover-bg: #333;
-    --delete-button-bg: #ba2121;
-    --delete-button-hover-bg: #a41515;
+    --close-button-bg: #7f8c8d;
+    --close-button-hover-bg: #4d5656;
+    --delete-button-bg: #a93226;
+    --delete-button-hover-bg: #7b241c;
 
     --object-tools-fg: var(--button-fg);
     --object-tools-bg: var(--close-button-bg);

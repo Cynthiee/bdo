@@ -5,18 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDO Unibank</title>
+    <title>Mainwestern</title>
     {% tailwind_css %}
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <!-- Navigation bar -->
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
     <nav class="bg-blue-800 text-white shadow-md">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-4">
-                    <a href="{% url 'landing_page' %}" class="text-2xl font-bold">BDO UniBank</a>
-                </div>
-                
+                <a href="{% url 'landing_page' %}" class="text-2xl font-bold">Mainwestern</a>
+
                 {% if user.is_authenticated %}
                 <div class="hidden md:flex space-x-6 items-center">
                     <a href="{% url 'account_list' %}" class="hover:text-blue-200">Accounts</a>
@@ -28,7 +26,9 @@
                     <div class="relative">
                         <button id="profileDropdown" class="flex items-center hover:text-blue-200">
                             <span class="mr-1">{{ user.username }}</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.67l3.71-3.48a.75.75 0 011.04 1.08l-4.25 4a.75.75 0 01-1.04 0l-4.25-4a.75.75 0 01-.02-1.06z" clip-rule="evenodd" />
+                            </svg>
                         </button>
                         <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
                             <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-800 hover:bg-blue-100">Profile</a>
@@ -37,40 +37,45 @@
                     </div>
                 </div>
                 {% else %}
-                <div class="space-x-4">
-                    <a href="{% url 'login' %}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-blue-800 transition duration-200">Login</a>
-                    <a href="{% url 'signup' %}" class="px-4 py-2 bg-white text-blue-800 rounded hover:bg-blue-100 transition duration-200">Sign Up</a>
+                <div class="space-x-4 hidden md:flex">
+                    <a href="{% url 'login' %}" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-blue-800 transition">Login</a>
+                    <a href="{% url 'signup' %}" class="px-4 py-2 bg-white text-blue-800 rounded hover:bg-blue-100 transition">Sign Up</a>
                 </div>
                 {% endif %}
-                
+
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
-                    <button id="mobileMenuBtn" class="text-white">
-                        <i class="fas fa-bars text-xl"></i>
+                    <button id="mobileMenuBtn" class="text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
                     </button>
                 </div>
             </div>
-            
-            <!-- Mobile menu -->
-            <div id="mobileMenu" class="md:hidden hidden pb-4">
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden pb-4 space-y-2">
                 {% if user.is_authenticated %}
-                <a href="{% url 'account_list' %}" class="block py-2 hover:text-blue-200">Accounts</a>
-                <a href="{% url 'transaction_history' %}" class="block py-2 hover:text-blue-200">Transactions</a>
-                <a href="{% url 'loan_list' %}" class="block py-2 hover:text-blue-200">Loans</a>
-                {% if user.user_type == 'admin' or user.user_type == 'staff' %}
-                <a href="{% url 'admin_dashboard' %}" class="block py-2 hover:text-blue-200">Admin Portal</a>
-                {% endif %}
-                <a href="{% url 'profile' %}" class="block py-2 hover:text-blue-200">Profile</a>
-                <a href="{% url 'logout' %}" class="block py-2 hover:text-blue-200">Logout</a>
+                    <a href="{% url 'account_list' %}" class="block py-2 hover:text-blue-200">Accounts</a>
+                    <a href="{% url 'transaction_history' %}" class="block py-2 hover:text-blue-200">Transactions</a>
+                    <a href="{% url 'loan_list' %}" class="block py-2 hover:text-blue-200">Loans</a>
+                    {% if user.user_type == 'admin' or user.user_type == 'staff' %}
+                    <a href="{% url 'admin_dashboard' %}" class="block py-2 hover:text-blue-200">Admin Portal</a>
+                    {% endif %}
+                    <a href="{% url 'profile' %}" class="block py-2 hover:text-blue-200">Profile</a>
+                    <a href="{% url 'logout' %}" class="block py-2 hover:text-blue-200">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="block py-2 hover:text-blue-200">Login</a>
+                    <a href="{% url 'signup' %}" class="block py-2 hover:text-blue-200">Sign Up</a>
                 {% endif %}
             </div>
         </div>
     </nav>
-    
-    <!-- Main content -->
-    <main class="container mx-auto px-4 py-8">
+
+    <!-- Flash messages -->
+    <main class="container mx-auto px-4 py-8 flex-1">
         {% if messages %}
-        <div class="mb-6">
+        <div class="mb-6 space-y-2">
             {% for message in messages %}
             <div class="p-4 rounded-md {% if message.tags == 'success' %}bg-green-100 border border-green-400 text-green-700{% elif message.tags == 'error' %}bg-red-100 border border-red-400 text-red-700{% else %}bg-blue-100 border border-blue-400 text-blue-700{% endif %}">
                 {{ message }}
@@ -78,17 +83,17 @@
             {% endfor %}
         </div>
         {% endif %}
-        
+
         {% block content %}{% endblock %}
     </main>
-    
+
     <!-- Footer -->
-    <footer class="bg-blue-800 text-white py-8 mt-auto">
+    <footer class="bg-blue-800 text-white py-8">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">BDO Banking</h3>
-                    <p class="text-blue-200">Secure and reliable banking services for all your financial needs.</p>
+                    <h3 class="text-xl font-bold mb-4">Mainwesthern</h3>
+                    <p class="text-blue-200">Secure and reliable services for all your financial needs.</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-4">Quick Links</h3>
@@ -101,38 +106,36 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                    <p class="text-blue-200">Email: support@bdobanking.com</p>
-                    <p class="text-blue-200">Phone: (123) 456-7890</p>
+                    <p class="text-blue-200">Email: support@mainwesthern.org</p>
                 </div>
             </div>
             <div class="mt-8 pt-6 border-t border-blue-700 text-center">
-                <p class="text-blue-200">&copy; {% now "Y" %} BDO Banking. All rights reserved.</p>
+                <p class="text-blue-200">&copy; Mainwesthern. All rights reserved.</p>
             </div>
         </div>
     </footer>
-    
+
+    <!-- Dropdown and mobile menu scripts -->
     <script>
-        // Toggle profile dropdown
+        // Profile dropdown
         const profileDropdown = document.getElementById('profileDropdown');
         const profileMenu = document.getElementById('profileMenu');
         if (profileDropdown && profileMenu) {
-            profileDropdown.addEventListener('click', function() {
+            profileDropdown.addEventListener('click', () => {
                 profileMenu.classList.toggle('hidden');
             });
-            
-            // Close the dropdown when clicking outside
-            document.addEventListener('click', function(event) {
+            document.addEventListener('click', (event) => {
                 if (!profileDropdown.contains(event.target) && !profileMenu.contains(event.target)) {
                     profileMenu.classList.add('hidden');
                 }
             });
         }
-        
-        // Toggle mobile menu
+
+        // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
         }

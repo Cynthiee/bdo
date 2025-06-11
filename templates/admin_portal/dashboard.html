@@ -30,6 +30,13 @@
             <p class="text-3xl font-bold text-yellow-900">{{ pending_loans_count }}</p>
             <a href="{% url 'loan_management' %}" class="text-dark-200 font-semibold">View All</a>
         </div>
+        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+            <h3 class="text-yellow-800 font-semibold">Pending Transaction</h3>
+                {% if pending_transaction_count and pending_transaction_count > 0 %}
+                <p class="text-3xl font-bold text-yellow-900">{{ pending_transaction_count }}</p>
+                {% endif %}
+            <a href="{% url 'pending_transactions' %}" class="text-dark-200 font-semibold">View All</a>
+        </div>
     </div>
     
     <!-- Recent Activity -->
