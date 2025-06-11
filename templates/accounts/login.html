@@ -32,14 +32,5 @@
             <a href="{% url 'signup' %}" class="text-blue-600 hover:underline">Sign up</a>
         </p>
     </div>
-
-    <div class="mt-4 text-center text-gray-500">Or</div>
-
-    <div class="mt-4 flex justify-center">
-        <a href="{% provider_login_url 'google' %}" class="flex items-center border border-gray-300 px-4 py-2 rounded hover:bg-gray-100 transition">
-            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" class="w-5 h-5 mr-2">
-            <span class="text-sm text-gray-700">Continue with Google</span>
-        </a>
-    </div>
 </div>
 {% endblock %}
