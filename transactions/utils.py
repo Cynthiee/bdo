@@ -53,14 +53,14 @@ def send_transaction_email_with_receipt(transaction):
         logger.warning(f"No email set for user: {user.username}")
         return
 
-    subject = f"{transaction.transaction_type.title()} Notification - ₦{transaction.amount}"
-    from_email = 'noreply@yourbank.com'
+    subject = f"{transaction.transaction_type.title()} Notification - ${transaction.amount}"
+    from_email = 'noreply@mainwesthern.com'
     to_email = user.email
 
     # Plain text content
     text_content = (
-        f"{transaction.transaction_type.title()} of ₦{transaction.amount} processed.\n"
-        f"New balance: ₦{transaction.account.balance:.2f}\n"
+        f"{transaction.transaction_type.title()} of ${transaction.amount} processed.\n"
+        f"New balance: ${transaction.account.balance:.2f}\n"
         f"Date: {transaction.timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n"
         "If unauthorized, contact support."
     )

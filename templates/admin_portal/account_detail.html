@@ -15,7 +15,7 @@
     </div>
     
     <!-- Account Information -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+    <div class="bg-white rounded-lg shadow-md overflow-x-auto mb-6">
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
             <h2 class="text-lg font-medium text-gray-700">Account Information</h2>
         </div>
@@ -61,7 +61,7 @@
             
             <!-- Account Actions -->
 
-            <div class="mt-6 flex flex-wrap space-x-3">
+            <div class="mt-6 overflow-x-auto flex flex-wrap space-x-3">
                 {% if account.status == 'active' %}
                 <a href="{% url 'admin_account_edit' account.id %}" class="px-4 py-2 border border-red-300 text-red-700 rounded-md hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                     Suspend Account
@@ -79,7 +79,7 @@
     </div>
     
     <!-- Transactions -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-x-auto">
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
             <h2 class="text-lg font-medium text-gray-700">Recent Transactions</h2>
             <a href="#" class="text-sm text-indigo-600 hover:text-indigo-900">View All</a>
