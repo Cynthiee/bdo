@@ -1,5 +1,3 @@
-# transactions/admin.py
-
 from django.contrib import admin, messages
 from .models import Transaction, Transfer
 from transactions.utils import send_transaction_email_with_receipt
@@ -34,13 +32,21 @@ class TransactionAdmin(admin.ModelAdmin):
 
     def approve_transactions(self, request, queryset):
         updated = 0
+        emailed = 0
         for transaction in queryset:
-            if transaction.status == 'pending':
+            if transaction.status != 'completed':
                 transaction.status = 'completed'
                 transaction.save()
-                send_transaction_email_with_receipt(transaction)  # Send email with PDF receipt
                 updated += 1
-        self.message_user(request, f"{updated} transaction(s) approved and email sent.", messages.SUCCESS)
+
+            send_transaction_email_with_receipt(transaction)
+            emailed += 1
+
+        self.message_user(
+            request,
+            f"{updated} transaction(s) marked as completed. {emailed} email(s) sent.",
+            messages.SUCCESS
+        )
 
     approve_transactions.short_description = "Approve selected transactions and send email"
 
