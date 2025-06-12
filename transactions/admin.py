@@ -34,7 +34,8 @@ class TransactionAdmin(admin.ModelAdmin):
         updated = 0
         emailed = 0
         for transaction in queryset:
-            if transaction.status != 'completed':
+            original_status = transaction.status
+            if original_status != 'completed':
                 transaction.status = 'completed'
                 transaction.save()
                 updated += 1
@@ -49,6 +50,19 @@ class TransactionAdmin(admin.ModelAdmin):
         )
 
     approve_transactions.short_description = "Approve selected transactions and send email"
+
+    def save_model(self, request, obj, form, change):
+        # Check if status changed to completed before saving
+        send_email = False
+        if change:
+            original = Transaction.objects.get(pk=obj.pk)
+            if original.status != 'completed' and obj.status == 'completed':
+                send_email = True
+
+        super().save_model(request, obj, form, change)
+
+        if send_email:
+            send_transaction_email_with_receipt(obj)
 
 
 @admin.register(Transfer)
