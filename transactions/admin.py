@@ -1,7 +1,7 @@
+# transactions/admin.py
+
 from django.contrib import admin, messages
 from .models import Transaction, Transfer
-from transactions.utils import send_transaction_email_with_receipt
-
 
 class TransferInline(admin.StackedInline):
     model = Transfer
@@ -12,19 +12,31 @@ class TransferInline(admin.StackedInline):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('transaction_id', 'account', 'transaction_type', 'amount', 'status', 'timestamp')
+    list_display = (
+        'transaction_id',
+        'account',
+        'transaction_type',
+        'amount',
+        'status',
+        'timestamp',
+    )
     list_filter = ('transaction_type', 'status', 'timestamp')
-    search_fields = ('transaction_id', 'account__account_number', 'description', 'reference_number')
+    search_fields = (
+        'transaction_id',
+        'account__account_number',
+        'description',
+        'reference_number',
+    )
     readonly_fields = ('transaction_id', 'timestamp')
     date_hierarchy = 'timestamp'
     inlines = [TransferInline]
 
     fieldsets = (
         ('Transaction Information', {
-            'fields': ('transaction_id', 'account', 'transaction_type', 'amount', 'status')
+            'fields': ('transaction_id', 'account', 'transaction_type', 'amount', 'status'),
         }),
         ('Details', {
-            'fields': ('description', 'reference_number', 'timestamp')
+            'fields': ('description', 'reference_number', 'timestamp'),
         }),
     )
 
@@ -32,37 +44,27 @@ class TransactionAdmin(admin.ModelAdmin):
 
     def approve_transactions(self, request, queryset):
         updated = 0
-        emailed = 0
-        for transaction in queryset:
-            original_status = transaction.status
-            if original_status != 'completed':
-                transaction.status = 'completed'
-                transaction.save()
+        for tx in queryset:
+            if tx.status != 'completed':
+                tx.status = 'completed'
+                tx.save()
                 updated += 1
-
-            send_transaction_email_with_receipt(transaction)
-            emailed += 1
 
         self.message_user(
             request,
-            f"{updated} transaction(s) marked as completed. {emailed} email(s) sent.",
+            f"{updated} transaction(s) marked as completed.",
             messages.SUCCESS
         )
 
-    approve_transactions.short_description = "Approve selected transactions and send email"
+    approve_transactions.short_description = (
+        "Approve selected transactions (status → completed)"
+    )
 
     def save_model(self, request, obj, form, change):
-        # Check if status changed to completed before saving
-        send_email = False
-        if change:
-            original = Transaction.objects.get(pk=obj.pk)
-            if original.status != 'completed' and obj.status == 'completed':
-                send_email = True
-
+        """
+        Let the signals handle email sending when status flips to 'completed'.
+        """
         super().save_model(request, obj, form, change)
-
-        if send_email:
-            send_transaction_email_with_receipt(obj)
 
 
 @admin.register(Transfer)
@@ -75,5 +77,4 @@ class TransferAdmin(admin.ModelAdmin):
     )
 
     def has_add_permission(self, request):
-        # Transfers should only be created along with Transactions
         return False
