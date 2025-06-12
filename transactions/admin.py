@@ -36,7 +36,7 @@ class TransactionAdmin(admin.ModelAdmin):
         updated = 0
         for transaction in queryset:
             if transaction.status == 'pending':
-                transaction.status = 'approved'
+                transaction.status = 'completed'
                 transaction.save()
                 send_transaction_email_with_receipt(transaction)  # Send email with PDF receipt
                 updated += 1

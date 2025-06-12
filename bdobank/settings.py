@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'tailwind',
     'widget_tweaks',
     'theme',
-    'django_browser_reload',
     'bdounibank',
     'accounts',
     'loans',
@@ -65,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -108,7 +106,6 @@ DATABASES = {
 
 
 database_url = 'postgresql://db_mainwesthern_owner:npg_JG5rqgLn2wHF@ep-autumn-sky-a8st018m-pooler.eastus2.azure.neon.tech/db_mainwesthern?sslmode=require'
-# database_url = os.environ.get('DATABASE_URL')
 DATABASES['default'] = dj_database_url.parse(database_url)
 
 
@@ -139,19 +136,12 @@ EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'ibeawuchichukwugozirim@gmail.com'
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = 'oqfbjvohqnwnvhqf'
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'ibeawuchichukwugozirim@gmail.com'
-# DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 CELERY_BROKER_URL = 'redis://red-d14ojb24d50c73cidhsg:6379/0'
-# CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = 'redis://red-d14ojb24d50c73cidhsg:6379/1'
-# CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
