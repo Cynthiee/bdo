@@ -57,7 +57,7 @@ def deposit_view(request):
                 status='pending',
                 description=description
             )
-            messages.success(request, f"Deposit of ₦{amount} submitted and is pending admin approval.")
+            messages.success(request, f"Deposit of ${amount} submitted and is pending admin approval.")
             return redirect('account_detail', account_number=account.account_number)
     else:
         form = DepositForm(request.user)
@@ -79,7 +79,7 @@ def withdrawal_view(request):
                 status='pending',
                 description=description
             )
-            messages.success(request, f"Withdrawal of ₦{amount} submitted and is pending admin approval.")
+            messages.success(request, f"Withdrawal of ${amount} submitted and is pending admin approval.")
             return redirect('account_detail', account_number=account.account_number)
     else:
         form = WithdrawalForm(request.user)
@@ -130,7 +130,7 @@ def transfer_view(request):
                     source_account=source_account,
                     destination_account=destination_account
                 )
-            messages.success(request, f"Transfer of ₦{amount} completed successfully.")
+            messages.success(request, f"Transfer of ${amount} completed successfully.")
             return redirect('account_detail', account_number=source_account.account_number)
     else:
         form = TransferForm(request.user)

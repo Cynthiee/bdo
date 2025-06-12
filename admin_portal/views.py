@@ -344,7 +344,12 @@ def admin_approve_transaction(request, transaction_id):
     """
     Approve a pending deposit or withdrawal: update balance, mark completed, trigger email.
     """
-    tx = Transaction.objects.select_for_update().get(transaction_id=transaction_id, status='pending')
+
+    with transaction.atomic():
+        tx = Transaction.objects.select_for_update().get(
+            transaction_id=transaction_id,
+            status='pending'
+    )
     account = tx.account
     with db_transaction.atomic():
         try:
