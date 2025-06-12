@@ -10,13 +10,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z$mwwxiqk9o_3d9_mw^4o9_kj(_=(&_%8!xs9msshq_iojy@37'
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-z$mwwxiqk9o_3d9_mw^4o9_kj(_=(&_%8!xs9msshq_iojy@37'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
 
-# DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -105,7 +105,8 @@ DATABASES = {
 }
 
 
-database_url = 'postgresql://db_mainwesthern_owner:npg_JG5rqgLn2wHF@ep-autumn-sky-a8st018m-pooler.eastus2.azure.neon.tech/db_mainwesthern?sslmode=require'
+# database_url = 'postgresql://db_mainwesthern_owner:npg_JG5rqgLn2wHF@ep-autumn-sky-a8st018m-pooler.eastus2.azure.neon.tech/db_mainwesthern?sslmode=require'
+database_url =  os.environ.get('DATABASE_URL')
 DATABASES['default'] = dj_database_url.parse(database_url)
 
 
@@ -135,13 +136,18 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'ibeawuchichukwugozirim@gmail.com'
-EMAIL_HOST_PASSWORD = 'oqfbjvohqnwnvhqf'
-DEFAULT_FROM_EMAIL = 'ibeawuchichukwugozirim@gmail.com'
+# EMAIL_HOST_USER = 'ibeawuchichukwugozirim@gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = 'oqfbjvohqnwnvhqf'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = 'ibeawuchichukwugozirim@gmail.com'
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 
-CELERY_BROKER_URL = 'redis://red-d14ojb24d50c73cidhsg:6379/0'
-CELERY_RESULT_BACKEND = 'redis://red-d14ojb24d50c73cidhsg:6379/1'
+# CELERY_BROKER_URL = 'redis://red-d14ojb24d50c73cidhsg:6379/0'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
+# CELERY_RESULT_BACKEND = 'redis://red-d14ojb24d50c73cidhsg:6379/1'
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
