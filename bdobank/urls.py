@@ -3,7 +3,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from bdounibank.views import landing_page_view
-
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,7 +14,10 @@ urlpatterns = [
     path('transactions/', include('transactions.urls')),
     path('loans/', include('loans.urls')),
     path('admin-portal/', include('admin_portal.urls')),
+    path('logout/', LogoutView.as_view(next_page='landing_page'), name='logout'),
 ]
+
+handler404 = 'bdounibank.views.custom_404_view'
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

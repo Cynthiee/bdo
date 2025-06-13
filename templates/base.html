@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mainwestern</title>
+    <title>Mainwesthern</title>
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_i2dsDXs7K4-cPM24El9ucXTmJX86JurKQaljyvVpfERa0XeCvFJJMU4eVOwNBWDWLzxJ9OUoRGNixw3usUhxn4h_exEpBkurx041IJwW0X5_sr3ImG-xd2XZeHEs-2fKJqf117hw1vt7NBCyQA8nL-eiMdo8V1VV8ID3Qf9-0H5o2Qv-PKw5m6ebN3k/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_08_30%20AM.png">
     {% tailwind_css %}
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
@@ -13,7 +14,9 @@
     <nav class="bg-blue-800 text-white shadow-md">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <a href="{% url 'landing_page' %}" class="text-2xl font-bold">Mainwestern</a>
+                <a href="{% url 'landing_page' %}" class="text-2xl font-bold">
+                <img style="width: 80px; height: 60px;" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbe48UnUNwUhiHHWbJ_9mDZqUDawj0crItgrLfOdaNqeTom6N-aOMfVWIMC-p-zNVSv4i-8M61sMpTvD-rrkxxq-ANDLyD7JebsK7JwtewZVDJCx5cWTJvr3m7kl_2Cb4zC4mwGSFZXsugpAjLmknY1IUlUDgCdr4C_ZZOoaQCCrzqVkIEug6C8aCUPj8/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_27_36%20AM.png" alt="">
+                </a>
 
                 {% if user.is_authenticated %}
                 <div class="hidden md:flex space-x-6 items-center">
@@ -31,8 +34,17 @@
                             </svg>
                         </button>
                         <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
-                            <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-800 hover:bg-blue-100">Profile</a>
-                            <a href="{% url 'logout' %}" class="block px-4 py-2 text-gray-800 hover:bg-blue-100">Logout</a>
+                            <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-800 hover:bg-blue-100">
+                                Profile
+                            </a>
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" style="color: black;"
+                                    class="w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100"
+                                    style="all: unset; display: block; cursor: pointer;">
+                                    Logout
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -63,8 +75,13 @@
                     <a href="{% url 'admin_dashboard' %}" class="block py-2 hover:text-blue-200">Admin Portal</a>
                     {% endif %}
                     <a href="{% url 'profile' %}" class="block py-2 hover:text-blue-200">Profile</a>
-                    <a href="{% url 'logout' %}" class="block py-2 hover:text-blue-200">Logout</a>
-                {% else %}
+                    <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="block py-2 hover:text-blue-200" style="all: unset; cursor: pointer; display: block; padding: 0.5rem 0; color: #cccccc;">
+                        Logout
+                    </button>
+                    </form>
+                    {% else %}
                     <a href="{% url 'login' %}" class="block py-2 hover:text-blue-200">Login</a>
                     <a href="{% url 'signup' %}" class="block py-2 hover:text-blue-200">Sign Up</a>
                 {% endif %}
@@ -91,10 +108,7 @@
     <footer class="bg-blue-800 text-white py-8">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Mainwesthern</h3>
-                    <p class="text-blue-200">Secure and reliable services for all your financial needs.</p>
-                </div>
+                <p>Mainwesthern is a complete e-Banking system. We have account-holders from almost all over the world. This is getting popular day by day. Our system is secure and robust. You may feel safe about your deposited funds.</p>
                 <div>
                     <h3 class="text-xl font-bold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
@@ -106,7 +120,7 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-                    <p class="text-blue-200">Email: support@mainwesthern.org</p>
+                    <p class="text-blue-200">Email: info@mainwesthern.org</p>
                 </div>
             </div>
             <div class="mt-8 pt-6 border-t border-blue-700 text-center">

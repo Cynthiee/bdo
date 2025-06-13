@@ -111,3 +111,10 @@ def create_account_view(request):
         'account_types': account_types
     }
     return render(request, 'bdounibank/create_account.html', context)
+
+
+
+from django.shortcuts import render
+
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{% static 'css/aos.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_i2dsDXs7K4-cPM24El9ucXTmJX86JurKQaljyvVpfERa0XeCvFJJMU4eVOwNBWDWLzxJ9OUoRGNixw3usUhxn4h_exEpBkurx041IJwW0X5_sr3ImG-xd2XZeHEs-2fKJqf117hw1vt7NBCyQA8nL-eiMdo8V1VV8ID3Qf9-0H5o2Qv-PKw5m6ebN3k/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_08_30%20AM.png">
     
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -55,7 +56,9 @@
         <div class="row align-items-center">
           
           <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="{% url 'landing_page' %}" class="h2 mb-0"><strong>Mainwesthern</strong></span> </a></h1>
+            <a href="{% url 'landing_page' %}" class="text-2xl font-bold">
+              <img style="width: 80px; height: 60px;" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbe48UnUNwUhiHHWbJ_9mDZqUDawj0crItgrLfOdaNqeTom6N-aOMfVWIMC-p-zNVSv4i-8M61sMpTvD-rrkxxq-ANDLyD7JebsK7JwtewZVDJCx5cWTJvr3m7kl_2Cb4zC4mwGSFZXsugpAjLmknY1IUlUDgCdr4C_ZZOoaQCCrzqVkIEug6C8aCUPj8/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_27_36%20AM.png" alt="">
+            </a>
           </div>
           <div class="col-12 col-md-10 d-none d-xl-block">
             <nav class="site-navigation position-relative text-right" role="navigation">
@@ -72,7 +75,12 @@
                 <li><a href="#contact-section" class="nav-link">Contact</a></li>
               {% if user.is_authenticated %}
               <li><a href="{% url 'dashboard' %}" class="btn-outline-primary-custom">Dashboard</a></li>
-              <li><a href="{% url 'logout' %}" class="btn-primary-custom">Logout</a></li>
+              <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="all: unset; cursor: pointer; color: #cccccc;">
+                  Logout
+                </button>
+              </form>
               {% else %}
               <li><a href="{% url 'login' %}" class="btn-outline-primary-custom">Sign In</a></li>
               <li><a href="{% url 'signup' %}" class="btn-primary-custom">Sig Up</a></li>
@@ -92,13 +100,7 @@
       
     </header>
 
-    <div class="container">
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-info">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    </div>
+
      
     <div class="site-blocks-cover overlay" style="background-image: url({% static 'images/hero_2.jpg' %});" data-aos="fade" id="home-section">
 
@@ -113,7 +115,7 @@
                 <p class="mb-5 desc"  data-aos="fade-up" data-aos-delay="100">Mainwesthern is a safe, fast, easy, and efficient e-Banking system that enables you access to your bank account and to carry out online banking services, 24/7</p>
                 <div data-aos="fade-up" data-aos-delay="100">
                   {% if not user.is_authenticated %}
-                  <a href="{% url 'signup' %}" target="_blank" class="btn  btn-primary mr-2 mb-2">Create an Account</a>
+                  <a href="{% url 'signup' %}" target="_blank" class="btn btn-primary mr-2 mb-2">Create an Account</a>
                   {% endif %}
                 </div>
                 <div data-aos="fade-up" data-aos-delay="100">
@@ -400,50 +402,46 @@
     </section>
 
     
-    <footer class="site-footer">
-      <div class="container">
+<footer class="site-footer" style="padding: 20px 0; font-size: 14px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
         <div class="row">
-          <div class="col-md-9">
-            <div class="row">
-              <div class="col-md-5">
-                <h2 class="footer-heading mb-4">About Us</h2>
-                <p>Mainwesthern is a complete e-Banking system. We have account-holders from almost all over the world. This is getting popular day by day. Our system is secure and robust. You may feel safe about your deposited funds.</p>
-              </div>
-              <div class="col-md-3 ml-auto">
-                <h2 class="footer-heading mb-4">Quick Links</h2>
-                <ul class="list-unstyled">
-                  <li><a href="#about-section" class="smoothscroll">About Us</a></li>
-                  <li><a href="#testimonials-section" class="smoothscroll">Testimonials</a></li>
-                  <li><a href="#contact-section" class="smoothscroll">Contact Us</a></li>
-                </ul>
-              </div>
-            </div>
+          <div class="col-md-5">
+            <a href="{% url 'landing_page' %}" class="text-xl font-bold">
+              <img style="width: 120px; height: auto;" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbe48UnUNwUhiHHWbJ_9mDZqUDawj0crItgrLfOdaNqeTom6N-aOMfVWIMC-p-zNVSv4i-8M61sMpTvD-rrkxxq-ANDLyD7JebsK7JwtewZVDJCx5cWTJvr3m7kl_2Cb4zC4mwGSFZXsugpAjLmknY1IUlUDgCdr4C_ZZOoaQCCrzqVkIEug6C8aCUPj8/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_27_36%20AM.png" alt="">
+            </a>
+            <h2 class="footer-heading mb-2" style="font-size: 16px;">About Us</h2>
+            <p style="margin-bottom: 10px;">Mainwesthern is a complete e-Banking system with a secure and robust platform, trusted globally by account-holders.</p>
           </div>
-
-          <div class="col-md-3 footer-social">
-            <h2 class="footer-heading mb-4">Contact Us</h2>
-              <ul class="footer-info-list">
-                <li>
-                  <i class="fas fa-map-marked"></i><p>Null Street, XYZ, Universe</p></li><li>
-                    <i class="fas fa-envelope"></i><p>info@mainwesthern.com</p></li><li>
-                      <i class="fas fa-phone"></i><p>+454512418544</p>
-                        </li></ul>
-                      </div>
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <div class="border-top pt-5">
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              <p>
-               Copyright © 2021  Mainwesthern  All Right Reserved
-              </p>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        
-            </div>
+          <div class="col-md-3 ml-auto">
+            <h2 class="footer-heading mb-2" style="font-size: 16px;">Quick Links</h2>
+            <ul class="list-unstyled">
+              <li><a href="#about-section" class="smoothscroll">About Us</a></li>
+              <li><a href="#testimonials-section" class="smoothscroll">Testimonials</a></li>
+              <li><a href="#contact-section" class="smoothscroll">Contact Us</a></li>
+            </ul>
           </div>
-          
         </div>
       </div>
-    </footer>
+
+      <div class="col-md-3 footer-social">
+        <h2 class="footer-heading mb-2" style="font-size: 16px;">Contact Us</h2>
+        <span class="fas fa-envelope"></span>
+        <p style="margin-top: 5px;">info@mainwesthern.org</p>
+      </div>
+    </div>
+
+    <div class="row pt-4 mt-4 text-center">
+      <div class="col-md-12">
+        <div class="border-top pt-3">
+          <p style="margin-bottom: 0;">&copy; Mainwesthern. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 
   </div> <!-- .site-wrap -->
 
