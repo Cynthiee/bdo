@@ -92,7 +92,13 @@
       
     </header>
 
-  
+    <div class="container">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
      
     <div class="site-blocks-cover overlay" style="background-image: url({% static 'images/hero_2.jpg' %});" data-aos="fade" id="home-section">
 

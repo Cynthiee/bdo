@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -41,6 +42,15 @@ class CustomLoginView(LoginView):
             self.request.session.set_expiry(0)
         
         return super().form_valid(form)
+    
+
+class CustomLogoutView(LogoutView):
+    next_page = 'landing_page'
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request, "You have been logged out successfully.")
+        return super().dispatch(request, *args, **kwargs)
+
     
     
 @login_required
