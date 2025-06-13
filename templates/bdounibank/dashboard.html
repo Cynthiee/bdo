@@ -37,6 +37,7 @@
             </span>
         </div>
         <div class="space-y-2">
+        {% if accounts %}
             <a href="{% url 'deposit' %}" class="block bg-blue-600 text-white text-center py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
                 Deposit
             </a>
@@ -46,6 +47,11 @@
             <a href="{% url 'transfer' %}" class="block bg-blue-600 text-white text-center py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
                 Transfer
             </a>
+        {% else %}
+            <a href="{% url 'transfer' %}" class="block bg-blue-600 text-white text-center py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+                Open Account
+            </a>
+        {% endif %}
         </div>
     </div>
 </div>
