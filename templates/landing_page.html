@@ -1,465 +1,258 @@
-<!doctype html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-  <head>
-    <title>Mainwesthern</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
 
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
-
-    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_i2dsDXs7K4-cPM24El9ucXTmJX86JurKQaljyvVpfERa0XeCvFJJMU4eVOwNBWDWLzxJ9OUoRGNixw3usUhxn4h_exEpBkurx041IJwW0X5_sr3ImG-xd2XZeHEs-2fKJqf117hw1vt7NBCyQA8nL-eiMdo8V1VV8ID3Qf9-0H5o2Qv-PKw5m6ebN3k/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_08_30%20AM.png">
-    
-  </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-  
-
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
-
-
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-   
-    
-    <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
-      <div class="container">
-        <div class="row align-items-center">
-          
-          <div class="col-6 col-xl-2">
-            <a href="{% url 'landing_page' %}" class="text-2xl font-bold">
-              <img style="width: 80px; height: 60px;" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbe48UnUNwUhiHHWbJ_9mDZqUDawj0crItgrLfOdaNqeTom6N-aOMfVWIMC-p-zNVSv4i-8M61sMpTvD-rrkxxq-ANDLyD7JebsK7JwtewZVDJCx5cWTJvr3m7kl_2Cb4zC4mwGSFZXsugpAjLmknY1IUlUDgCdr4C_ZZOoaQCCrzqVkIEug6C8aCUPj8/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_27_36%20AM.png" alt="">
-            </a>
-          </div>
-          <div class="col-12 col-md-10 d-none d-xl-block">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="#home-section" class="nav-link">Home</a></li>
-                <li class="has-children">
-                  <a href="#about-section" class="nav-link">About Us</a>
-                  <ul class="dropdown">
-                    <li><a href="#faq-section" class="nav-link">FAQ</a></li>
-                    <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li>
-                  </ul>
-                </li>
-                <li><a href="#contact-section" class="nav-link">Contact</a></li>
-              {% if user.is_authenticated %}
-              <li><a href="{% url 'dashboard' %}" class="btn-outline-primary-custom">Dashboard</a></li>
-              <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="all: unset; cursor: pointer; color: #cccccc;">
-                  Logout
-                </button>
-              </form>
-              {% else %}
-              <li><a href="{% url 'login' %}" class="btn-outline-primary-custom">Sign In</a></li>
-              <li><a href="{% url 'signup' %}" class="btn-primary-custom">Sig Up</a></li>
-              {% endif %}
-              {% if user.user_type == 'admin' or user.user_type == 'staff' %}
-              <li><a  href="{% url 'admin_dashboard' %}" class="btn-primary-custom">Admin Portal</a></li>
-              {% endif %}
-              </ul>
-            </nav>
-          </div>
-
-
-          <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a></div>
-
-        </div>
-      </div>
-      
-    </header>
-
-
-     
-    <div class="site-blocks-cover overlay" style="background-image: url({% static 'images/hero_2.jpg' %});" data-aos="fade" id="home-section">
-
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-
-          
-          <div class="col-md-10 mt-lg-5 text-center">
-            <div class="single-text owl-carousel">
-              <div class="slide">
-                <h1 class="text-uppercase" data-aos="fade-up">Banking Solutions</h1>
-                <p class="mb-5 desc"  data-aos="fade-up" data-aos-delay="100">Mainwesthern is a safe, fast, easy, and efficient e-Banking system that enables you access to your bank account and to carry out online banking services, 24/7</p>
-                <div data-aos="fade-up" data-aos-delay="100">
-                  {% if not user.is_authenticated %}
-                  <a href="{% url 'signup' %}" target="_blank" class="btn btn-primary mr-2 mb-2">Create an Account</a>
-                  {% endif %}
+{% block content %}
+<!-- Hero Section -->
+<section class="relative m-12">
+    <div class="bg-blue-800 text-white py-18 rounded-lg shadow-xl">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h1 class="text-4xl font-bold mb-4">Banking Made Simple</h1>
+                    <p class="text-xl mb-8">Secure, reliable, and intuitive banking services designed to help you achieve your financial goals.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'signup' %}" class="bg-white text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-100 transition duration-300">Accounts</a>
+                        <a href="{% url 'dashboard' %}" class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:text-blue-800 transition duration-300">Go to Dashboard</a>
+                        {% else %}
+                        <a href="{% url 'signup' %}" class="bg-white text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-100 transition duration-300">Open an Account</a>
+                        <a href="{% url 'login' %}" class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-white hover:text-blue-800 transition duration-300">Login to Online Banking</a>
+                        {% endif %}
+                    </div>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="100">
-                  {% if user.is_authenticated %}
-                  <a href="{% url 'dashboard' %}" target="_blank" class="btn  btn-primary mr-2 mb-2">Dashboard</a>
-                  {% endif %}
-                  {% if user.user_type == 'admin' or user.user_type == 'staff' %}
-                  <a href="{% url 'admin_dashboard' %}" target="_blank" class="btn  btn-primary mr-2 mb-2">Admin Panel</a>
-                  {% endif %}
+                <div class="hidden md:block">
+                    <!-- Replace with actual image in production -->
+                    <img src="{% static 'images/hero-img.jpg' %}" alt="Online Banking" class="w-full">
                 </div>
-              </div>
-
             </div>
-          </div>
-            
         </div>
-      </div>
-
-      <a href="#next" class="mouse smoothscroll">
-        <span class="mouse-icon">
-          <span class="mouse-wheel"></span>
-        </span>
-      </a>
-    </div>  
-
-
-    <div class="site-section cta-big-image" id="about-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-8 text-center">
-            <h2 class="section-title mb-3" data-aos="fade-up" data-aos-delay="">About Us</h2>
-            <p class="lead" data-aos="fade-up" data-aos-delay="100">We care about your money and safety.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
-            <figure class="circle-bg">
-            <img src="https://img.freepik.com/premium-vector/collection-different-logos-including-one-that-says-comment_692155-1205.jpg?semt=ais_hybrid&w=740" alt="Free Website Template by Free-Template.co" class="img-fluid">
-            </figure>
-          </div>
-          <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            
-            <h3 class="text-black mb-4">We Solve Your Financial Problem</h3>
-
-            <p><strong>Our Mission</strong>
-              <br>
-              We are focused on building and sustaining long-term generational relationships with our customers
-
-              </p>
-              <p>
-                <strong>Our Vision</strong>
-                <br>
-              Mainwesthern will serve all over the world and becomes the most popular Bank in this universe.
-             </p>
-
-             <p>
-              <strong>
-                Our Goal
-              </strong>
-              <br>
-              Viserbank will serve their customers from all over the world and becomes the popular bank in this universe.
-             </p>
-          </div>
-        </div>    
-        
-      </div>  
     </div>
-
-    <div class="site-section" id="next">
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="">
-            <img src="https://img.freepik.com/free-photo/3d-render-money-transfer-mobile-banking-online_107791-16729.jpg?semt=ais_hybrid&w=740" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
-            <h3 class="card-title">Fast Transfer</h3>
-            <p>Our Money transfer system is secure and easy. Send your funds to your beneficiaries within Mainwesthern or to other banks. Transfer within Mainwesthern is instant and to other banks may take 24 hours.</p>
-          </div>
-          <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="100">
-            <img src="{% static 'images/flaticon-svg/svg/006-credit-card.svg' %}" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
-            <h3 class="card-title">Deposit Funds</h3>
-            <p>Account-holders of Mainwesthern are able to deposit their money through our several payment systems. We have online payment services like PayPal, Stripe, Paystack, Skrill, Flutterwave, Mollie, Payeer, etc.</p>
-          </div>
-          <div class="col-md-4 text-center" data-aos="fade-up" data-aos-delay="200">
-            <img src="https://png.pngtree.com/png-vector/20220610/ourmid/pngtree-withdraw-money-from-atm-isolated-on-white-background-png-image_4951678.png" alt="Free Website Template by Free-Template.co" class="img-fluid w-25 mb-4">
-            <h3 class="card-title">Withdraw Funds</h3>
-            <p>Account-holders of Mainwesthern are able to withdraw money from their account. Without verification, any withdrawal won't be completed, so you can trust Mainwesthern.</p>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
-            <figure class="circle-bg">
-            <img src="{% static 'images/about_2.jpg' %}" alt="Free Website Template by Free-Template.co" class="img-fluid">
-            </figure>
-          </div>
-          <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            <div class="mb-4">
-              <h3 class="h3 mb-4 text-black">We are giving you the best services</h3>
-              <p>Every balance subtracting transactions need OTP verification so You can feel safe about your funds. Also, you can use the google authenticator app on your cellphone and enable 2FA security from the account menu.</p>
-              
-            </div>
-              
-            <div class="mb-4">
-              <ul class="list-unstyled ul-check success">
-                <li>Secure Service</li>
-                <li>Lowest Transaction Fee</li>
-                <li>Swift Transactions</li>
-              </ul>
-              
-            </div>
-
-            
-            
-            
-          </div>
-        </div>
-      </div>
-    </div>
-
-  
-
-
-    <section class="site-section">
-      <div class="container">
-
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-3" data-aos="fade-up" data-aos-delay="">How It Works</h2>
-            <p class="lead" data-aos="fade-up" data-aos-delay="100">It's easy to join with Us</p>
-          </div>
-        </div>
-        
-        <div class="row align-items-lg-center" >
-          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
-
-            <div class="owl-carousel slide-one-item-alt">
-              <img src="https://castlefirstbank.com/assets.trabiancdn.com/api/file/zc52d8YSNOzu8MmuMW7e_open_an_account.png" alt="Image" class="img-fluid">
-              <img src="https://img.freepik.com/free-vector/product-quality-concept-illustration_114360-7301.jpg?semt=ais_hybrid&w=740" alt="Image" class="img-fluid">
-              <img src="https://img.freepik.com/free-vector/people-keeping-money-bank-protecting-savings-safe-vector-illustration-secure-finance-deposit-investment-safety-concept_74855-13196.jpg?semt=ais_hybrid&w=740" alt="Image" class="img-fluid">
-              <img src="https://st3.depositphotos.com/8881578/15097/i/450/depositphotos_150979940-stock-photo-business-technology-internet-and-network.jpg" alt="Image" class="img-fluid">
-            </div>
-            <div class="custom-direction">
-              <a href="#" class="custom-prev"><span><span class="icon-keyboard_backspace"></span></span></a><a href="#" class="custom-next"><span><span class="icon-keyboard_backspace"></span></span></a>
-            </div>
-
-          </div>
-          <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            
-            <div class="owl-carousel slide-one-item-alt-text">
-              <div>
-                <h4 class="section-title mb-3">01. Open an Account</h4>
-                <p>To be an account holder you have to open an account first.</p>
-
-                <p><a href="#" class="btn btn-primary mr-2 mb-2">Get Started</a></p>
-              </div>
-              <div>
-                <h4 class="section-title mb-3">02. Get an approval</h4>
-                <p>After registration you need to verify your Email and Mobile Number.</p>
-                <p><a href="#" class="btn btn-primary mr-2 mb-2">Get Started</a></p>
-              </div>
-              <div>
-                <h4 class="section-title mb-3">03. Deposit</h4>
-                <p>Deposit some funds before applying on any FDR or DPS plans.</p>
-
-                <p><a href="#" class="btn btn-primary mr-2 mb-2">Get Started</a></p>
-              </div>
-              <div>
-                <h4 class="section-title mb-3">04. Get Service</h4>
-                <p>Now you can get any of our services as our registered account-holder</p>
-
-                <p><a href="#" class="btn btn-primary mr-2 mb-2">Get Started</a></p>
-              </div>
-              
-            </div>
-            
-          </div>
-        </div>
-      </div>
-    </section>
-
-    
-  
-<section class="site-section testimonial-wrap" id="testimonials-section" data-aos="fade">
-  <div class="container">
-    <div class="row mb-5">
-      <div class="col-12 text-center">
-        <h2 class="section-title mb-3">Happy Customers</h2>
-      </div>
-    </div>
-  </div>
-
-  <div class="slide-one-item home-slider owl-carousel">
-    <div>
-      <div class="testimonial">
-        <blockquote class="mb-5">
-          <p>&ldquo;Switching to MainWesthern was the best financial decision I made this year. Their mobile banking app is seamless, and customer service is always on point.&rdquo;</p>
-        </blockquote>
-        <figure class="mb-4 d-flex align-items-center justify-content-center">
-          <p>John Smith, Lagos</p>
-        </figure>
-      </div>
-    </div>
-
-    <div>
-      <div class="testimonial">
-        <blockquote class="mb-5">
-          <p>&ldquo;MainWesthern helped me secure a small business loan with minimal stress. Their support team guided me through every step.&rdquo;</p>
-        </blockquote>
-        <figure class="mb-4 d-flex align-items-center justify-content-center">
-          <p>Christine Aguilar, Abuja</p>
-        </figure>
-      </div>
-    </div>
-
-    <div>
-      <div class="testimonial">
-        <blockquote class="mb-5">
-          <p>&ldquo;I’ve never experienced faster transaction times. Whether it’s local transfers or international payments, MainWesthern delivers every time.&rdquo;</p>
-        </blockquote>
-        <figure class="mb-4 d-flex align-items-center justify-content-center">
-          <p>Robert Spears, Port Harcourt</p>
-        </figure>
-      </div>
-    </div>
-
-    <div>
-      <div class="testimonial">
-        <blockquote class="mb-5">
-          <p>&ldquo;I was impressed by how easy it was to open an account online. MainWesthern truly understands convenience and digital banking.&rdquo;</p>
-        </blockquote>
-        <figure class="mb-4 d-flex align-items-center justify-content-center">
-          <p>Bruce Rogers, Enugu</p>
-        </figure>
-      </div>
-    </div>
-  </div>
 </section>
 
-
-    <section class="site-section bg-light" id="pricing-section">
-      <div class="container">
-        <div class="row site-section" id="faq-section">
-          <div class="col-12 text-center" data-aos="fade">
-            <h2 class="section-title">Frequently Ask Questions</h2>
-          </div>
+<!-- Features Section -->
+<section class="mb-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Why Choose BDO Banking?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-blue-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Secure Banking</h3>
+                <p class="text-gray-600">State-of-the-art security protocols to protect your financial information and transactions 24/7.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-blue-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Easy Account Management</h3>
+                <p class="text-gray-600">View balances, transfer funds, and manage your accounts with our intuitive online platform.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-blue-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Competitive Loans</h3>
+                <p class="text-gray-600">Access a variety of loan options with competitive rates to help you achieve your financial goals.</p>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-lg-6">
-            
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="text-black h4 mb-4">Is opening an account is free?</h3>
-            <p>Yes, we don't take any fees for opening an account.</p>
-            </div>
-            
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">Is it possible to send money from Mainwesthern to another bank?</h3>
-              <p>Yes, you can send money from Mainwesthern to another bank</p>
-            </div>
-
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="text-black h4 mb-4">How to open an account?</h3>
-            <p>Get the registration form by clicking on the Sign Up button on the top bar. Provide all information and click on the Sign Up button.</p>
-            </div>
-            
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">Does Mainwesthern share our information for advertisement?</h3>
-              <p>No, we don't provide our account holder's information to any third-party organization.</p>
-            </div>
-          </div>
-          <div class="col-lg-6">
-
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">How to take a loan?</h3>
-              <p>We have several loan plans. Choose the best plan suitable for you and just click on the Apply Now button and put the amount.</p>
-            </div>
-            
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="text-black h4 mb-4">How to open a FDR?</h3>
-              <p>We have several FDR plans. Choose the best plan suitable for you and just click on the Apply Now button and put the amount.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    
-<footer class="site-footer" style="padding: 20px 0; font-size: 14px;">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9">
-        <div class="row">
-          <div class="col-md-5">
-            <a href="{% url 'landing_page' %}" class="text-xl font-bold">
-              <img style="width: 120px; height: auto;" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbe48UnUNwUhiHHWbJ_9mDZqUDawj0crItgrLfOdaNqeTom6N-aOMfVWIMC-p-zNVSv4i-8M61sMpTvD-rrkxxq-ANDLyD7JebsK7JwtewZVDJCx5cWTJvr3m7kl_2Cb4zC4mwGSFZXsugpAjLmknY1IUlUDgCdr4C_ZZOoaQCCrzqVkIEug6C8aCUPj8/s320/ChatGPT%20Image%20Jun%2013,%202025,%2011_27_36%20AM.png" alt="">
-            </a>
-            <h2 class="footer-heading mb-2" style="font-size: 16px;">About Us</h2>
-            <p style="margin-bottom: 10px;">Mainwesthern is a complete e-Banking system with a secure and robust platform, trusted globally by account-holders.</p>
-          </div>
-          <div class="col-md-3 ml-auto">
-            <h2 class="footer-heading mb-2" style="font-size: 16px;">Quick Links</h2>
-            <ul class="list-unstyled">
-              <li><a href="#about-section" class="smoothscroll">About Us</a></li>
-              <li><a href="#testimonials-section" class="smoothscroll">Testimonials</a></li>
-              <li><a href="#contact-section" class="smoothscroll">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 footer-social">
-        <h2 class="footer-heading mb-2" style="font-size: 16px;">Contact Us</h2>
-        <span class="fas fa-envelope"></span>
-        <p style="margin-top: 5px;">info@mainwesthern.org</p>
-      </div>
     </div>
+</section>
 
-    <div class="row pt-4 mt-4 text-center">
-      <div class="col-md-12">
-        <div class="border-top pt-3">
-          <p style="margin-bottom: 0;">&copy; Mainwesthern. All rights reserved.</p>
+<!-- Account Types Section -->
+<section class="mb-16 bg-gray-50 py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Account Options</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Savings Account -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-blue-800 text-white p-4">
+                    <h3 class="text-xl font-bold">Savings Account</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Start saving with competitive interest rates and minimal fees.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>No monthly maintenance fee</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Competitive interest rates</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Easy online access</span>
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create_account' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% else %}
+                    <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Checking Account -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-blue-800 text-white p-4">
+                    <h3 class="text-xl font-bold">Checking Account</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Manage your day-to-day expenses with our flexible checking account.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Free online bill pay</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>No minimum balance</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Free debit card</span>
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create_account' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% else %}
+                    <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Fixed Deposit -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-blue-800 text-white p-4">
+                    <h3 class="text-xl font-bold">Fixed Deposit</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Grow your savings with higher interest rates for fixed terms.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Higher interest rates</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Flexible term options</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Guaranteed returns</span>
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'create_account' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% else %}
+                    <a href="{% url 'signup' %}" class="block text-center bg-blue-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Open Account</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</footer>
+</section>
 
+<!-- Testimonials Section -->
+<section class="mb-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <span class="text-blue-800 font-bold text-xl">JD</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">John Doe</h4>
+                        <p class="text-sm text-gray-500">Savings Account Customer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"I've been with BDO Banking for over 5 years now, and their customer service has always been exceptional. The online banking platform is intuitive and makes managing my finances a breeze."</p>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <span class="text-blue-800 font-bold text-xl">JS</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Jane Smith</h4>
+                        <p class="text-sm text-gray-500">Business Account Customer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"As a small business owner, I needed a bank that understood my needs. BDO Banking has been a reliable partner, offering personalized service and flexible solutions that have helped my business grow."</p>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <span class="text-blue-800 font-bold text-xl">RJ</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Robert Johnson</h4>
+                        <p class="text-sm text-gray-500">Loan Customer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"The loan process at BDO Banking was smooth and transparent. The staff guided me through each step, and I was able to get approved quickly. The interest rates were competitive, and I couldn't be happier."</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-  </div> <!-- .site-wrap -->
-
-  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-  <script src="{% static 'js/jquery-ui.js' %}"></script>
-  <script src="{% static 'js/popper.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
-  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-  <script src="{% static 'js/aos.js' %}"></script>
-  <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
-  <script src="{% static 'js/jquery.sticky.js' %}"></script>
-  <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
-
-  
-  <script src="{% static 'js/main.js' %}"></script>
-
-  
-  </body>
-</html>
+<!-- Call to Action -->
+<section class="mb-16">
+    <div class="bg-blue-100 py-12 rounded-lg">
+        <div class="container mx-auto px-4 text-center">
+        {% if user.is_authenticated %}
+        <h2 class="text-3xl font-bold text-blue-800 mb-4">Welcome back, {{ user.first_name|default:"Valued Customer" }}!</h2>
+        <p class="text-xl text-blue-600 mb-8">Thank you for choosing BDO Banking. Explore your dashboard, manage your accounts, and take full control of your finances.</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="{% url 'dashboard' %}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-700 transition duration-300">Go to Dashboard</a>
+            <a href="{% url 'signup' %}     " class="border-2 border-blue-800 text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-800 hover:text-white transition duration-300">Need Help?</a>
+        </div>
+        {% else %}
+        <h2 class="text-3xl font-bold text-blue-800 mb-4">Ready to get started?</h2>
+        <p class="text-xl text-blue-600 mb-8">Join thousands of satisfied customers who trust BDO Banking with their financial needs.</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="{% url 'signup' %}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-700 transition duration-300">Open an Account Today</a>
+            <a href="#" class="border-2 border-blue-800 text-blue-800 font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-800 hover:text-white transition duration-300">Learn More</a>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

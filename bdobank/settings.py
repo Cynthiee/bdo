@@ -11,12 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-z$mwwxiqk9o_3d9_mw^4o9_kj(_=(&_%8!xs9msshq_iojy@37'
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-# DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -103,10 +102,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-database_url = 'postgresql://db_mainwesthern_owner:npg_JG5rqgLn2wHF@ep-autumn-sky-a8st018m-pooler.eastus2.azure.neon.tech/db_mainwesthern?sslmode=require'
-DATABASES['default'] = dj_database_url.parse(database_url)
 
 
 # Password validation

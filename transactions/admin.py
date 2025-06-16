@@ -1,7 +1,19 @@
 # transactions/admin.py
 
 from django.contrib import admin, messages
-from .models import Transaction, Transfer
+from .models import Transaction, Transfer,IMFCode, COTCode, VerificationLog
+
+@admin.register(IMFCode)
+class IMFCodeAdmin(admin.ModelAdmin):
+    list_display = ('code', 'active', 'usage_count', 'created_at')
+    list_filter = ('active',)
+    search_fields = ('code',)
+
+@admin.register(COTCode)
+class COTCodeAdmin(admin.ModelAdmin):
+    list_display = ('code', 'active', 'usage_count', 'created_at')
+    list_filter = ('active',)
+    search_fields = ('code',)
 
 class TransferInline(admin.StackedInline):
     model = Transfer
@@ -20,7 +32,7 @@ class TransactionAdmin(admin.ModelAdmin):
         'status',
         'timestamp',
     )
-    list_filter = ('transaction_type', 'status', 'timestamp')
+    list_filter = ('transaction_type', 'is_imf_verified', 'is_cot_verified', 'completed', 'status', 'timestamp')
     search_fields = (
         'transaction_id',
         'account__account_number',
@@ -41,6 +53,12 @@ class TransactionAdmin(admin.ModelAdmin):
     )
 
     actions = ['approve_transactions']
+
+@admin.register(VerificationLog)
+class VerificationLogAdmin(admin.ModelAdmin):
+    list_display = ('user', 'transaction', 'code_type', 'code_value', 'success', 'timestamp')
+    list_filter = ('code_type', 'success', 'timestamp')
+    search_fields = ('user__username', 'code_value')
 
     def approve_transactions(self, request, queryset):
         updated = 0

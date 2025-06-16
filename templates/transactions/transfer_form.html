@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Transfer Funds - BDO Unibank{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-4">Initiate Transfer</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="w-full py-2 px-4 rounded bg-blue-700 hover:bg-blue-800 text-white">Continue</button>
+  </form>
+{% endblock %}

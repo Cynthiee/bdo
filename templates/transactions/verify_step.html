@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Additional Verification - Mainwesthern{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-4">Step {{ step }}: Additional Verification</h1>
+  <p>Please click Continue to proceed to the next step of security checks.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="w-full py-2 px-4 rounded bg-blue-700 hover:bg-blue-800 text-white">Continue</button>
+  </form>
+{% endblock %}
