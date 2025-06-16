@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Page Not Found | BDO Unibank{% endblock %}
+
+{% block content %}
+<style>
+  .error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #f8fafc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .error-box {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .error-header {
+    background-color: #003366;
+    color: white;
+    padding: 40px;
+    text-align: center;
+  }
+
+  .error-header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .error-header p {
+    font-size: 14px;
+    color: #cbd5e1;
+  }
+
+  .error-body {
+    padding: 50px 30px;
+    text-align: center;
+  }
+
+  .error-body h2 {
+    font-size: 64px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 10px;
+  }
+
+  .error-body h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #334155;
+  }
+
+  .error-body p {
+    color: #64748b;
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+
+  .error-body a.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .error-body a.button:hover {
+    background-color: #1d4ed8;
+  }
+
+  @media (min-width: 768px) {
+    .error-box {
+      flex-direction: row;
+    }
+
+    .error-header, .error-body {
+      flex: 1;
+    }
+
+    .error-header {
+      text-align: left;
+      padding: 60px 40px;
+    }
+
+    .error-body {
+      padding: 60px 40px;
+      text-align: left;
+    }
+
+    .error-body h2 {
+      font-size: 72px;
+    }
+  }
+</style>
+
+<div class="error-container">
+  <div class="error-box">
+    <div class="error-header">
+      <h1>BDO Unibank</h1>
+      <p>Your trusted partner in every step of your financial journey.</p>
+    </div>
+    <div class="error-body">
+      <h2>404</h2>
+      <h3>Oops! Page not found</h3>
+      <p>It seems the page you’re looking for doesn’t exist or has been moved. Let’s get you back on track.</p>
+      <a href="{% url 'landing_page' %}" class="button">Return to Homepage</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

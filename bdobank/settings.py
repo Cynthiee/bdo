@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,8 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-z$mwwxiqk9o_3d9_mw^4o9_kj(_=(&_%8!xs9msshq_iojy@37'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -29,12 +32,11 @@ INSTALLED_APPS = [
     'tailwind',
     'widget_tweaks',
     'theme',
-    'django_browser_reload',
     'bdounibank',
     'accounts',
     'loans',
     'admin_portal',
-    'transactions',
+    'transactions.apps.TransactionsConfig',
     'crispy_forms',
     'crispy_tailwind',  
 
@@ -61,38 +63,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 
-# Provider specific settings
-SOCIALACCOUNT_PROVIDERS = {
-    # For Google Authentication
-    'google': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '1044241902003-70pbbhmtkiahlcclhisg74m67u72c4l8.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        }
-    }
-}
 
 
-SOCIALACCOUNT_LOGIN_ON_GET = True
-
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Default Django backend
-
-    # For Google Authentication
-    # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
-
-]
 
 
 ROOT_URLCONF = 'bdobank.urls'
@@ -108,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'admin_portal.context_processors.pending_transaction_count',
             ],
         },
     },
@@ -146,6 +123,31 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = 'mainwesthern@gmail.com'
+EMAIL_HOST_PASSWORD = 'shdwegpvcxowwtiy'  # No spaces!
+DEFAULT_FROM_EMAIL = 'mainwesthern@gmail.com'
+
+
+CELERY_BROKER_URL = 'redis://red-d14ojb24d50c73cidhsg:6379/0'
+CELERY_RESULT_BACKEND = 'redis://red-d14ojb24d50c73cidhsg:6379/1'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+
+# redis://red-d14ojb24d50c73cidhsg:6379
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -181,8 +183,24 @@ NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_REDIRECT_URL = '/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 CRISPY_TEMPLATE_PACK = "tailwind"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.core.mail': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Account Details - BDO  UniBank {% endblock %}
+{% block title %}Account Details - BDO Unibank{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
+<div class="max-w-4xl mx-auto  overflow-x-auto">
     <div class="flex items-center mb-6">
         <a href="{% url 'account_list' %}" class="text-blue-600 hover:underline mr-2">
             <i class="fas fa-arrow-left"></i> Back to Accounts
@@ -40,11 +40,11 @@
                 <!-- <a href="{% url 'deposit' %}?account={{ account.account_number }}" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-200">
                     <i class="fas fa-plus-circle mr-1"></i> Deposit
                 </a> -->
-                <a href="{% url 'withdraw' %}?account={{ account.account_number }}" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-200">
-                    <i class="fas fa-minus-circle mr-1"></i> Withdraw
+                <a href="{% url 'withdrawal_request' %}?account={{ account.account_number }}" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-200">
+                    <i class="fas fa-minus-circle mr-1"></i> withdrawal_request
                 </a>
-                <a href="{% url 'transfer' %}?account={{ account.account_number }}" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
-                    <i class="fas fa-exchange-alt mr-1"></i> Transfer
+                <a href="{% url 'transfer_request' %}?account={{ account.account_number }}" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+                    <i class="fas fa-exchange-alt mr-1"></i> transfer_request
                 </a>
             </div>
         </div>
@@ -85,8 +85,8 @@
                             <div class="text-sm text-gray-900">{{ transaction.transaction_type|title }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium {% if transaction.transaction_type == 'deposit' or transaction.transaction_type == 'transfer' and transaction.account == account %}text-green-600{% else %}text-red-600{% endif %}">
-                                {% if transaction.transaction_type == 'deposit' or transaction.transaction_type == 'transfer' and transaction.account == account %}+{% else %}-{% endif %}
+                            <div class="text-sm font-medium {% if transaction.transaction_type == 'deposit' or transaction.transaction_type == 'transfer_request' and transaction.account == account %}text-green-600{% else %}text-red-600{% endif %}">
+                                {% if transaction.transaction_type == 'deposit' or transaction.transaction_type == 'transfer_request' and transaction.account == account %}+{% else %}-{% endif %}
                                 ${{ transaction.amount|floatformat:2 }}
                             </div>
                         </td>

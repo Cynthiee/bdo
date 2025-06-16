@@ -14,4 +14,7 @@ urlpatterns = [
     path('users/<int:user_id>/edit/', views.user_edit_view, name='user_edit'),
     path('accounts/<int:account_id>/', views.account_detail_view, name='account_detail'),
     path('accounts/<int:account_id>/edit/', views.account_edit_view, name='admin_account_edit'),
+     path('transactions/pending/', views.pending_transactions_view, name='pending_transactions'),
+    path('transactions/<uuid:transaction_id>/approve/', views.admin_approve_transaction, name='admin_approve_transaction'),
+    path('transactions/<uuid:transaction_id>/reject/', views.admin_reject_transaction, name='admin_reject_transaction'),
 ]

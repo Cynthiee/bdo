@@ -10,6 +10,7 @@ from bdounibank.models import BankAccount, AccountType
 from loans.models import Loan, LoanType
 from transactions.models import Transaction
 from .models import AuditLog, SystemSetting
+from django.db import transaction as db_transaction
 from django.db.models import Q
 from .forms import UserSearchForm, AccountSearchForm, LoanApprovalForm, BankAccountForm
 
@@ -325,3 +326,57 @@ def account_edit_view(request, account_id):
         'bank_account': account,
         'form': form,
     })
+
+@login_required
+@user_passes_test(is_admin_or_staff)
+def pending_transactions_view(request):
+    """
+    List all pending deposit/withdrawal requests for admin to approve or reject.
+    """
+    pending = Transaction.objects.filter(status='pending', transaction_type__in=['deposit','withdrawal']).order_by('-timestamp')
+    return render(request, 'admin_portal/pending_transactions.html', {
+        'pending_transactions': pending
+    })
+
+@login_required
+@user_passes_test(is_admin_or_staff)
+def admin_approve_transaction(request, transaction_id):
+    """
+    Approve a pending deposit or withdrawal: update balance, mark completed, trigger email.
+    """
+
+    with transaction.atomic():
+        tx = Transaction.objects.select_for_update().get(
+            transaction_id=transaction_id,
+            status='pending'
+    )
+    account = tx.account
+    with db_transaction.atomic():
+        try:
+            if tx.transaction_type == 'deposit':
+                account.deposit(tx.amount)
+            elif tx.transaction_type == 'withdrawal':
+                account.withdraw(tx.amount)
+            else:
+                messages.error(request, "Unsupported transaction type for approval.")
+                return redirect('pending_transactions')
+        except Exception as e:
+            messages.error(request, f"Approval failed: {e}")
+            return redirect('pending_transactions')
+        tx.status = 'completed'
+        tx.save()  # post_save signal enqueues email task
+    messages.success(request, f"Transaction {tx.transaction_id} approved; user will be notified.")
+    return redirect('pending_transactions')
+
+@login_required
+@user_passes_test(is_admin_or_staff)
+def admin_reject_transaction(request, transaction_id):
+    """
+    Reject a pending transaction: mark status to 'failed'. No email by default.
+    """
+    tx = get_object_or_404(Transaction, transaction_id=transaction_id, status='pending')
+    # choose a rejection status matching your STATUS_CHOICES; here 'failed'
+    tx.status = 'failed'
+    tx.save()
+    messages.success(request, f"Transaction {tx.transaction_id} rejected.")
+    return redirect('pending_transactions')

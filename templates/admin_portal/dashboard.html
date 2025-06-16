@@ -6,7 +6,7 @@
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
     
     <!-- Key Metrics -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 overflow-x-auto">
         <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
             <h3 class="text-blue-800 font-semibold">Total Customers</h3>
             <p class="text-3xl font-bold text-blue-900">{{ user_count }}</p>
@@ -30,10 +30,17 @@
             <p class="text-3xl font-bold text-yellow-900">{{ pending_loans_count }}</p>
             <a href="{% url 'loan_management' %}" class="text-dark-200 font-semibold">View All</a>
         </div>
+        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+            <h3 class="text-yellow-800 font-semibold">Pending Transaction</h3>
+                {% if pending_transaction_count and pending_transaction_count > 0 %}
+                <p class="text-3xl font-bold text-yellow-900">{{ pending_transaction_count }}</p>
+                {% endif %}
+            <a href="{% url 'pending_transactions' %}" class="text-dark-200 font-semibold">View All</a>
+        </div>
     </div>
     
     <!-- Recent Activity -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 overflow-x-auto">
         <!-- Recent Transactions -->
         <div class="bg-white border rounded-lg shadow-sm">
             <div class="border-b px-4 py-3 bg-gray-50 rounded-t-lg">
@@ -83,7 +90,7 @@
         </div>
         
         <!-- Recent Audit Logs -->
-        <div class="bg-white border rounded-lg shadow-sm">
+        <div class="bg-white border rounded-lg shadow-sm overflow-x-auto">
             <div class="border-b px-4 py-3 bg-gray-50 rounded-t-lg">
                 <h3 class="font-semibold text-gray-700">Recent System Activity</h3>
             </div>

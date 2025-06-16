@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Your Accounts - BDO Banking{% endblock %}
+{% block title %}Your Accounts - BDO Unibank{% endblock %}
 
 {% block content %}
 <div class="flex justify-between items-center mb-6">
@@ -12,7 +12,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
     {% for account in accounts %}
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-x-auto">
         <div class="bg-blue-800 text-white p-4">
             <div class="flex justify-between items-center">
                 <h2 class="text-lg font-bold">{{ account.account_type.name }}</h2>
@@ -36,8 +36,8 @@
                 <!-- <a href="{% url 'deposit' %}?account={{ account.account_number }}" class="flex-1 bg-green-600 text-white text-center py-2 px-4 rounded hover:bg-green-700 transition duration-200">
                     Deposit
                 </a> -->
-                <a href="{% url 'withdraw' %}?account={{ account.account_number }}" class="flex-1 bg-red-600 text-white text-center py-2 px-4 rounded hover:bg-red-700 transition duration-200">
-                    Withdraw
+                <a href="{% url 'transfer_request' %}?account={{ account.account_number }}" class="flex-1 bg-red-600 text-white text-center py-2 px-4 rounded hover:bg-red-700 transition duration-200">
+                    transfer_request
                 </a>
             </div>
         </div>
