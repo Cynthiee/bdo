@@ -131,9 +131,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = 'mainwesthern@gmail.com'
-EMAIL_HOST_PASSWORD = 'shdwegpvcxowwtiy'  # No spaces!
-DEFAULT_FROM_EMAIL = 'mainwesthern@gmail.com'
+EMAIL_HOST_USER = 'your_mail@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_password'  # No spaces!
+DEFAULT_FROM_EMAIL = 'your_mail@gmail.com'
 
 
 CELERY_BROKER_URL = 'redis://red-d14ojb24d50c73cidhsg:6379/0'
