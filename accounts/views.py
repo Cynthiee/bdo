@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -79,7 +79,5 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
 
-#logout view function
-from django.contrib.auth.views import LogoutView
 class CustomLogoutView(LogoutView):
-    next_page = 'landing_page'  # Redirect to landing page after logout
+    next_page = 'landing_page'  
