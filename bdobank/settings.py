@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-z$mwwxiqk9o_3d9_mw^4o9_kj(_=(&_%8!xs9msshq_iojy@37
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['bdo-unibank.co']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -93,10 +93,9 @@ WSGI_APPLICATION = 'bdobank.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(
+        'postgresql://neondb_owner:npg_p6Y3vJAUDGRP@ep-solitary-credit-a8nlra5r-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require'
+    ),
 }
 
 
